@@ -1,0 +1,7 @@
+#profilePhoto { width: 200px; height: 200px; }
+@media (max-width: 660px) {
+    #profilePhoto { width: 35%; height: auto; }
+    main.myProfile {
+        margin-bottom: 100px;
+    }
+}

@@ -1,0 +1,13 @@
+.layanan {
+    cursor: pointer;
+    flex-basis: 25%;
+}
+
+@media (max-width: 660px) {
+    .layanan {
+        flex-basis: 50%;
+    }
+    main {
+        margin-bottom: 100px;
+    }
+}

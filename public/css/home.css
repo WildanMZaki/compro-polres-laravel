@@ -1,0 +1,53 @@
+#hero {
+    min-height: 40vh;
+}
+.hero-img {
+    background-image: url('../img/img2.jpg');
+    background-size: cover;
+}
+
+.satker, .layanan, .berita { cursor: pointer; }
+.slick-prev:before {
+    color: #1b1e1b;
+    position: relative;
+    left: 20px;
+}
+.slick-next:before {
+    color: #1b1e1b;
+    position: relative;
+    right: 20px;
+}
+.slick-track {
+    display: flex;
+}
+
+.slick-track .slick-slide {
+    display: flex;
+    height: auto;
+}
+.slick-slide { width: 100%; }
+.slick-slide img {
+    /* height: 50% !important; */
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.judul-berita, .tanggal-berita, .isi-berita {
+    min-width: 90%;
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 660px) {
+    .hero-img {
+        background-image: url('../img/img6.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    #satker-news {
+        margin-bottom: 100px;
+    }
+}

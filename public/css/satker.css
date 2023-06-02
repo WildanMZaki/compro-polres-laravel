@@ -1,0 +1,28 @@
+.semua-satker .satker {
+    flex-basis: 20%;
+    cursor: pointer;
+}
+.satker-img {
+    object-fit: contain;
+    object-position: center;
+}
+main {
+    margin-bottom: 100px;
+}
+
+@media (max-width: 767px) {
+    .semua-satker {
+        justify-content: start;
+    }
+    .semua-satker .satker {
+        flex-basis: 33.3%;
+        cursor: pointer;
+        min-height: 30vh;
+        max-height: 30vh;
+    }
+}
+@media (max-width: 435px) {
+    .semua-satker .satker {
+        flex-basis: 50%;
+    }
+}

@@ -1,0 +1,77 @@
+.berita { cursor: pointer; }
+.berita:hover .judul-berita {
+    border-bottom: solid 3px orange;
+}
+@media (min-width: 1000px) {
+    .berita {
+        width: 23% !important;
+        height: 60vh;
+    }
+    .gambar-berita {
+        width: 100% !important;
+        max-height: 50%;
+        min-height: 50%;
+    }
+    .gambar-berita img {
+        max-width: 100%;
+        max-height: 100%;
+        overflow: hidden;
+        object-fit: scale-down;
+        object-position: 20% 10%;
+    }
+    .info-berita {
+        width: 100% !important;
+        max-height: 50%;
+        min-height: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .judul-berita {
+        font-size: 1.5rem;
+        min-width: 85%;
+        max-width: 85%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+@media (max-width: 1000px) {
+    .berita {
+        width: 45% !important;
+    }
+    .gambar-berita {
+        width: 25% !important;
+        height: 100%;
+    }
+    .info-berita {
+        width: 75% !important;
+    }
+    .judul-berita, .tanggal-berita, .isi-berita {
+        min-width: 90%;
+        max-width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media (max-width: 767px) {
+    .berita {
+        width: 95% !important;
+    }
+    .gambar-berita {
+        width: 25% !important;
+        height: 100%;
+    }
+    .info-berita {
+        width: 75% !important;
+    }
+    .judul-berita, .tanggal-berita, .isi-berita {
+        min-width: 90%;
+        max-width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    main {
+        margin-bottom: 100px;
+    }
+}

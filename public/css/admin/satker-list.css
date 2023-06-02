@@ -1,0 +1,32 @@
+.satker {
+    flex-basis: 33%;
+    max-height: 65vh;
+    min-height: 65vh;
+}
+.satker .card {
+    margin: 7px;
+}
+
+.satker-body img {
+    max-height: 125px;
+    min-height: 125px;
+    object-fit: contain;
+}
+
+.satker-body p {
+    margin-top: 10px;
+    max-height: 100px;
+    min-height: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
+
+@media (max-width: 660px) {
+    .satker {
+        max-height: 50vh;
+        min-height: 50vh;
+    }
+    .satker-body p { display: none; }
+}
