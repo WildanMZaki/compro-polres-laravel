@@ -71,53 +71,30 @@
     <section id="satker-news" class="container">
         <div class="row">
             <!-- Section Satker -->
-            <div class="col-lg-8 mb-3">
-                <div class="row m-0">
+            <div class="col-lg-8">
+                <div class="row mb-3">
                     <h4 class="m-0">Satuan Kerja</h4>
                 </div>
-                <div class="row semua-satker m-0">
-                    <div class="p-lg-3 p-1">
-                        <div class="border shadow py-3 rounded-3 satker">
-                            <div class="d-flex justify-content-center px-3 pb-3 h-75">
-                                <img src="./assets/Humas_Polri.png" alt="logo" class="img-fluid satker-img w-100">
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <h6 class="m-0 px-2 text-center satker-name">HUMAS</h6>
-                            </div>
-                        </div>
+                @if (!count($satkers))
+                    <div class="w-100 text-center p-lg-5 p-4">
+                        <p>Belum ada satuan kerja ditambahkan</p>
                     </div>
-                    <div class="p-lg-3 p-1">
-                        <div class="border shadow py-3 rounded-3 satker">
-                            <div class="d-flex justify-content-center px-3 pb-3 h-75">
-                                <img src="./assets/SDM_POLRI.png" alt="logo" class="img-fluid satker-img w-100">
+                @else
+                    <div class="row semua-satker mb-4">
+                        @foreach ($satkers as $satker)
+                            <div class="p-lg-3 p-1" onclick="location.href = `{{ route('detail-satker', $satker->slug) }}`">
+                                <div class="border shadow py-3 rounded-3 satker">
+                                    <div class="d-flex justify-content-center px-3 pb-3 h-75">
+                                        <img src="{{ asset('img/'.(($satker->image)? 'satker/'.$satker->image: 'blogo.png')) }}" alt="logo" class="img-fluid satker-img w-100">
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <h6 class="m-0 px-2 text-center satker-name">{{ $satker->name }}</h6>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="d-flex justify-content-center">
-                                <h6 class="m-0 px-2 text-center satker-name">SDM</h6>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
-                    <div class="p-lg-3 p-1">
-                        <div class="border shadow py-3 rounded-3 satker">
-                            <div class="d-flex justify-content-center px-3 pb-3 h-75">
-                                <img src="./assets/Propam_Polri.png" alt="logo" class="img-fluid satker-img w-100">
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <h6 class="m-0 px-2 text-center satker-name">PROPAM</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-lg-3 p-1">
-                        <div class="border shadow py-3 rounded-3 satker">
-                            <div class="d-flex justify-content-center px-3 pb-3 h-75">
-                                <img src="./assets/korps_sabhara.jpg" alt="logo" class="img-fluid satker-img w-100">
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <h6 class="m-0 px-2 text-center satker-name">Korps Sabhara</h6>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                @endif
             </div>
 
             <!-- Section Berita -->

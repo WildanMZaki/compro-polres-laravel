@@ -24,6 +24,7 @@ class SatkerController extends Controller
         $data['styles'] = ['common', 'satker'];
         $data['route_back'] = 'satker';
         $data['satker'] = $satker;
+        $data['header'] = $satker->name;
         return view('menu/detail-satker', $data);
     }
 }

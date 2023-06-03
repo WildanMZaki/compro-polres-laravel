@@ -24,7 +24,7 @@ function showNews() {
         });
     });
 }
-showNews();
+// showNews();
 
 
 const search = new Search({

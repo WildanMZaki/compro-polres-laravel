@@ -21,7 +21,20 @@
     </div>
     <div class="row">
         <div class="semua-berita w-100 d-flex flex-lg-row flex-md-row flex-column justify-content-lg-start justify-content-md-start justify-content-center align-items-center mt-4 flex-lg-wrap flex-md-wrap">
-
+            @foreach ($beritas as $berita)
+                <div class="berita d-flex flex-lg-column border p-2 mb-lg-4 mb-3 mx-2 shadow rounded-1" onclick="location.href=`{{ route('baca-berita', $berita->slug) }}`">
+                    <div class="gambar-berita p-lg-2 pe-2 text-center">
+                        <img src="{{ asset('img/berita/'.$berita->image) }}" alt="Gambar Berita" class="img-fluid">
+                    </div>
+                    <div class="info-berita p-lg-2 d-flex flex-column justify-content-start">
+                        <h6 class="m-0 judul-berita">{{ $berita->title }}</h6>
+                        <small class="tanggal-berita my-2"> {{ date_convert($berita->created_at) }}
+                            <i class="bx bx-calendar"></i>
+                        </small>
+                        <small class="isi-berita">{!! $berita->content !!}</small>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 </main>

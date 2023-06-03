@@ -28,11 +28,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('main');
+
 Route::get('/Satker', [SatkerController::class, 'index'])->name('satker');
 Route::get('/Satker/{satker:slug}', [SatkerController::class, 'detail_satker'])->name('detail-satker');
+
 Route::get('/Berita', [BeritaController::class, 'index'])->name('berita');
+Route::get('/Berita/{berita:slug}', [BeritaController::class, 'show'])->name('baca-berita');
+
 Route::get('/Layanan', [LayananController::class, 'index'])->name('layanan');
-Route::get('/Profile', [ProfileController::class, 'index'])->name('profile');
+Route::get('/Profile', [ProfileController::class, 'index'])->name('profile')->middleware('auth');
 
 Route::get('/Admin/', [AdminController::class, 'index'])->name('admin-main');
 Route::get('/Admin/Accounts', [AdminController::class, 'accounts'])->name('accounts');
@@ -46,6 +50,10 @@ Route::patch('/Admin/Satker/edit/{satker:slug}', [AdminSatkerController::class, 
 Route::delete('/Admin/Satker/delete/{satker:slug}', [AdminSatkerController::class, 'remove_satker'])->name('hapus-satker');
 
 Route::get('/Admin/Berita', [AdminBeritaController::class, 'index'])->name('admin-berita');
+Route::get('/Admin/Berita/new', [AdminBeritaController::class, 'add'])->name('tambah-berita');
+Route::post('/Admin/Berita/save', [AdminBeritaController::class, 'save_news'])->name('simpan-berita');
+Route::delete('/Admin/Berita/delete/{berita:slug}', [AdminBeritaController::class, 'remove_news'])->name('hapus-berita');
+
 Route::get('/Admin/Layanan/SIM', [AdminLayananController::class, 'sim'])->name('sim_service');
 Route::get('/Admin/Layanan/STNK', [AdminLayananController::class, 'stnk'])->name('stnk_service');
 Route::get('/Admin/Layanan/SKCK', [AdminLayananController::class, 'skck'])->name('skck_service');

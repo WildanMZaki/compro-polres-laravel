@@ -22,8 +22,8 @@
                 <h4 class="pb-2 border-bottom border-warning text-start">Hotline:</h4>
                 <div class="contacts d-flex {{ count($satker->satker_contacts) > 3? 'justify-content-around': 'justify-content-center' }}">
                     @if (!count($satker->satker_contacts))
-                        <div class="p-5 text-center">
-                            <small>Tidak ada kontak disertakan</small>
+                        <div class="p-3 text-center">
+                            <small class="text-muted">Tidak ada kontak disertakan</small>
                         </div>
                     @else
                         @foreach ($satker->satker_contacts as $contact)

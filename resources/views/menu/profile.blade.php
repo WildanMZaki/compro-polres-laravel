@@ -10,15 +10,15 @@
             <section class="col-lg-5 ">
                 <div class="border-bottom border-1 mb-3">
                     <h6 class="fw-bold">Nama:</h6>
-                    <p class="m-0">Wildan M Zaki</p>
+                    <p class="m-0">{{ $user->name }}</p>
                 </div>
                 <div class="border-bottom border-1 mb-3">
                     <h6 class="fw-bold">Email:</h6>
-                    <p class="m-0">wildanmzaki7@gmail.com</p>
+                    <p class="m-0">{{ $user->email }}</p>
                 </div>
                 <div class="border-bottom border-1 mb-3">
                     <h6 class="fw-bold">No. Telepon:</h6>
-                    <p class="m-0">081234567890</p>
+                    <p class="m-0">{{ $user->telepon_number }}</p>
                 </div>
             </section>
         </section>
