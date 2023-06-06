@@ -36,7 +36,7 @@
                     </div>
                     <div class="card-body py-5 d-flex flex-lg-column flex-row align-items-center satker-body">
                         <img src="{{ asset('img/'.((!$satker->image)? 'blogo.png': 'satker/'.$satker->image)) }}" alt="" class="img-fluid w-50 h-50">
-                        <p class="h-25">{{ $satker->deskripsi }}</p>
+                        <p class="h-25 satker-description text-center">{{ Str::limit( $satker->deskripsi, 60 ) }}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-lg-end justify-content-center">
                         <a href="{{ route('edit-satker', $satker->slug) }}">

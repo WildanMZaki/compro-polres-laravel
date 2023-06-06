@@ -1,53 +1,53 @@
-$('.mission-templates').on('click', '.misi-template', e => {
-    const type = parseInt(e.currentTarget.dataset.type);
-    $('#change-template').show();
-    if (type === 1) {
-        $('#misi_t1').show();
-        $('#misi_t2').hide();
-    } else if (type === 2) {
-        $('#misi_t1').hide();
-        $('#misi_t2').show();
-    } else {
-        $('#misi_t1').show();
-        $('#misi_t2').show();
-    }
-    $('[name="misi_type"]').val(((type === 1)? 'paragraf': (type === 2)? 'list': 'paragraf+list'));
-    $('.mission-templates').hide();
-});
+// $('.mission-templates').on('click', '.misi-template', e => {
+//     const type = parseInt(e.currentTarget.dataset.type);
+//     $('#change-template').show();
+//     if (type === 1) {
+//         $('#misi_t1').show();
+//         $('#misi_t2').hide();
+//     } else if (type === 2) {
+//         $('#misi_t1').hide();
+//         $('#misi_t2').show();
+//     } else {
+//         $('#misi_t1').show();
+//         $('#misi_t2').show();
+//     }
+//     $('[name="misi_type"]').val(((type === 1)? 'paragraf': (type === 2)? 'list': 'paragraf+list'));
+//     $('.mission-templates').hide();
+// });
 
-$('#change-template').click(e => {
-    $('.mission-templates').show();
-    $('#misi_t1').hide();
-    $('#misi_t2').hide();
-    $('#change-template').hide();
-});
+// $('#change-template').click(e => {
+//     $('.mission-templates').show();
+//     $('#misi_t1').hide();
+//     $('#misi_t2').hide();
+//     $('#change-template').hide();
+// });
 
-let mission_items = 1;
-$('#addMissionListItem').click(e => {
-    let empety = null;
-    $('[name="misi_list_item[]"]').each((i, item) => {
-        if (!$(item).val()) {
-            empety = true;
-        }
-    });
-    if (empety) {
-        showError('Tolong isi dulu kolom yang kosong ya!', 3);
-        return;
-    }
-    const item_count = mission_items +1;
-    mission_items += 1;
-    $('#mission-list').append(`
-        <div class="rmission d-flex align-items-center w-100 flex-stretch mb-3" id="rmission${item_count}">
-            <div class="p-4 row-number-mission-item">${$('.rmission').length +1}</div>
-            <div class="w-100 me-3">
-                <input type="text" name="misi_list_item[]" class="form-control w-100">
-            </div>
-            <div>
-                <button type="button" class="remove-mission-item btn btn-danger" data-count="${item_count}"><span class="d-flex align-items-center"><i class="bx bx-x"></i> Hapus</span></button>
-            </div>
-        </div>
-    `);
-});
+// let mission_items = 1;
+// $('#addMissionListItem').click(e => {
+//     let empety = null;
+//     $('[name="misi_list_item[]"]').each((i, item) => {
+//         if (!$(item).val()) {
+//             empety = true;
+//         }
+//     });
+//     if (empety) {
+//         showError('Tolong isi dulu kolom yang kosong ya!', 3);
+//         return;
+//     }
+//     const item_count = mission_items +1;
+//     mission_items += 1;
+//     $('#mission-list').append(`
+//         <div class="rmission d-flex align-items-center w-100 flex-stretch mb-3" id="rmission${item_count}">
+//             <div class="p-4 row-number-mission-item">${$('.rmission').length +1}</div>
+//             <div class="w-100 me-3">
+//                 <input type="text" name="misi_list_item[]" class="form-control w-100">
+//             </div>
+//             <div>
+//                 <button type="button" class="remove-mission-item btn btn-danger" data-count="${item_count}"><span class="d-flex align-items-center"><i class="bx bx-x"></i> Hapus</span></button>
+//             </div>
+//         </div>
+//     `);
+// });
 
 function showError(message, timer_in_second = 3, id = 'errorMsg'){
     $(`#${id}`).html(message);
@@ -56,11 +56,11 @@ function showError(message, timer_in_second = 3, id = 'errorMsg'){
     }, timer_in_second*1000)
 }
 
-$('#mission-list').on('click', '.remove-mission-item', e => {
-    const count = e.currentTarget.dataset.count;
-    $(`#rmission${count}`).remove();
-    $('.row-number-mission-item').each((index, item) => $(item).html(index+1));
-});
+// $('#mission-list').on('click', '.remove-mission-item', e => {
+//     const count = e.currentTarget.dataset.count;
+//     $(`#rmission${count}`).remove();
+//     $('.row-number-mission-item').each((index, item) => $(item).html(index+1));
+// });
 
 let contact = 1;
 $('#addContact').click(e => {

@@ -19,11 +19,13 @@
     </div>
     <div class="col-xl-6 d-flex">
         <div class="col-xl-3">
-            <select class="form-select" aria-label="Select example">
-                <option value="1">Tanggal</option>
-                <option value="2">Visitor</option>
-                <option value="3">Judul</option>
-            </select>
+            <form action="{{ route('admin-berita') }}" method="get">
+                <select class="form-select" aria-label="Select example" name="sort" onchange="event.target.parentElement.submit()">
+                    <option value="created_at" {{ ($sort === 'created_at')? 'selected':'' }}>Tanggal</option>
+                    <option value="visitor" {{ ($sort === 'visitor')? 'selected':'' }}>Visitor</option>
+                    <option value="title" {{ ($sort === 'title')? 'selected':'' }}>Judul</option>
+                </select>
+            </form>
         </div>
         <div class="col-xl-9">
             <input type="text" class="form-control" id="searchBox" placeholder="Cari Berita"/>
@@ -31,7 +33,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row mb-5">
     <div class="col-xl-12 d-flex justify-content-end">
         <a href="{{ route('tambah-berita') }}" class="text-decoration-none">
             <button class="btn btn-primary me-3 d-flex align-items-center">
@@ -52,13 +54,15 @@
 @else
     <div class="row d-flex flex-wrap align-items-stretch" id="semua-berita">
         @foreach ($beritas as $berita)
-            <div class="col-xl-4 berita cursor-pointer h-100 m-2">
+            <div class="col-xl-4 berita cursor-pointer h-100 my-2">
                 <!--begin::List Widget 7-->
                 <div class="card card-xl-stretch mb-xl-8 shadow h-100 flex-fill">
                     <!--begin::Header-->
                     <div class="card-header align-items-center border-0 mt-4">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="fw-bolder text-dark judul-berita">{{ $berita->title }}</span>
+                            <a href="{{ route('preview-berita', $berita->slug) }}">
+                                <span class="fw-bolder text-dark judul-berita">{{ $berita->title }}</span>
+                            </a>
                             <span class="text-muted mt-1 fw-bold fs-7 tanggal-berita">{{ date_convert($berita->created_at) }}</span>
                         </h3>
                         <div class="card-toolbar">
@@ -80,7 +84,7 @@
                                 <div class="px-7 py-5">
                                     <!--begin::Actions-->
                                     <div class="d-flex justify-content-end">
-                                        <button type="reset" class="btn btn-sm btn-light btn-light-primary me-2" data-kt-menu-dismiss="true">Edit</button>
+                                        <button type="reset" class="btn btn-sm btn-light btn-light-primary me-2" data-kt-menu-dismiss="true" onclick="location.href = `{{ route('edit-berita', $berita->slug) }}`">Edit</button>
                                         <button type="submit" class="btn btn-sm btn-danger" data-kt-menu-dismiss="true" data-bs-toggle="modal" data-bs-target="#confirm_delete" data-slug="{{ $berita->slug }}" data-title="{{ $berita->title }}">Hapus</button>
                                     </div>
                                     <!--end::Actions-->
@@ -125,7 +129,7 @@
           >
             Tidak
           </button>
-          <form action="" method="post" id="deleteSatkerForm">
+          <form action="" method="post" id="deleteBeritaForm">
               @csrf @method('delete')
               <button type="submit" class="btn btn-danger">
                 Ya, hapus

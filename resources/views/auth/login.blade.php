@@ -48,7 +48,7 @@
 
                     <div class="row mb-4">
                         <label for="pwdInput" class="form-label">Password</label>
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="TUliskan password kamu">
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Tuliskan password kamu">
 
                         @error('password')
                             <span class="invalid-feedback" role="alert">

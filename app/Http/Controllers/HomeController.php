@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Berita;
 use App\Models\Satker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -26,7 +28,7 @@ class HomeController extends Controller
         $data['styles'] = ['common', '../module/slick/slick', '../module/slick/slick-theme', 'home'];
         $data['scripts'] = ['../module/slick/slick', 'home'];
         $data['satkers'] = Satker::all();
-        $allNews = collect(Berita::all());
+        $data['beritas'] = Berita::all()->sortByDesc('created_at')->take(3);
         return view('menu/home', $data);
     }
 }

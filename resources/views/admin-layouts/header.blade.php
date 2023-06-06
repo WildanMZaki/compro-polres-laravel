@@ -2,8 +2,9 @@
     <!--begin::Brand-->
     <div class="header-brand">
         <!--begin::Logo-->
-        <a href="../../demo8/dist/index.html">
-            <img alt="Logo" src="{{ asset('img/blogo.png') }}" class="h-25px h-lg-25px" />
+        <a href="{{ route('main') }}" class="d-flex align-items-center">
+            <img alt="Logo" src="{{ asset('img/blogo.png') }}" class="h-25px h-lg-25px me-3" />
+            <h4 class="text-white m-0">Polres Subang</h4>
         </a>
         <!--end::Logo-->
         <!--begin::Aside minimize-->
@@ -51,7 +52,16 @@
 
             <div class="page-title d-flex flex-column me-5">
                 <!--begin::Title-->
-                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">{{ $header }}</h1>
+                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">
+                    <div class="d-flex align-items-content mb-4">
+                        @if (isset($route_back))
+                            <a href="{{ route($route_back) }}" class="me-3">
+                                <i class="bx bx-arrow-back text-dark cursor-pointer fs-3"></i>
+                            </a>
+                        @endif
+                        {{ $header }}
+                    </div>
+                </h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">

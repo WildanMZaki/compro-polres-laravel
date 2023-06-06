@@ -30,5 +30,7 @@
             <script src="{{ asset("js/$script.js") }}"></script>
         @endforeach
     @endif
+
+    @stack('scripts')
 </body>
 </html>

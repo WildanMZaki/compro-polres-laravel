@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBeritasTable extends Migration
+class CreateCommentDislikesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateBeritasTable extends Migration
      */
     public function up()
     {
-        Schema::create('beritas', function (Blueprint $table) {
+        Schema::create('comment_dislikes', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 250)->unique();
-            $table->string('slug', 250)->unique();
-            $table->string('image', 300);
-            $table->longText('content');
-            $table->integer('visitor', false, true)->default(0);
+            $table->foreignId('comment_id')->constrained('comments')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateBeritasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('beritas');
+        Schema::dropIfExists('comment_dislikes');
     }
 }

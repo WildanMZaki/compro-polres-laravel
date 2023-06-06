@@ -1,7 +1,7 @@
 <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
     <!--begin::Symbol-->
     <div class="symbol symbol-50px">
-        <img src="{{ asset('assets/media/avatars/150-26.jpg') }}" alt="" />
+        <img src="{{ asset("img/user/".$user->image) }}" alt="" />
     </div>
     <!--end::Symbol-->
     <!--begin::Wrapper-->
@@ -11,10 +11,10 @@
             <!--begin::Info-->
             <div class="flex-grow-1 me-2">
                 <!--begin::Username-->
-                <a href="#" class="text-white text-hover-primary fs-6 fw-bold">Paul Melone</a>
+                <a href="#" class="text-white text-hover-primary fs-6 fw-bold">{{ $user->name }}</a>
                 <!--end::Username-->
                 <!--begin::Description-->
-                <span class="text-gray-600 fw-bold d-block fs-8 mb-1">Python Dev</span>
+                <span class="text-gray-600 fw-bold d-block fs-8 mb-1">{{ $user->role }}</span>
                 <!--end::Description-->
                 <!--begin::Label-->
                 <div class="d-flex align-items-center text-success fs-9">
@@ -42,14 +42,14 @@
                         <div class="menu-content d-flex align-items-center px-3">
                             <!--begin::Avatar-->
                             <div class="symbol symbol-50px me-5">
-                                <img alt="Logo" src="{{ asset('assets/media/avatars/150-26.jpg') }}" />
+                                <img alt="Logo" src="{{ asset("img/user/".$user->image) }}" />
                             </div>
                             <!--end::Avatar-->
                             <!--begin::Username-->
                             <div class="d-flex flex-column">
-                                <div class="fw-bolder d-flex align-items-center fs-5">Max Smith
-                                <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Admin</span></div>
-                                <a href="#" class="fw-bold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                <div class="fw-bolder d-flex align-items-center fs-5">{{ $user->name }}
+                                <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{ $user->role }}</span></div>
+                                <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ $user->email }}</a>
                             </div>
                             <!--end::Username-->
                         </div>
@@ -73,8 +73,11 @@
                     <!--end::Menu item-->
                     <!--begin::Menu item-->
                     <div class="menu-item px-5">
-                        <a href="../../demo8/dist/authentication/flows/basic/sign-in.html" class="menu-link px-5">Sign Out</a>
+                        <a href="{{ route('logout')}}" class="menu-link px-5" onclick="event.preventDefault(); document.getElementById('log-out').submit();">Sign Out</a>
                     </div>
+                    <form action="{{ route('logout') }}" method="post" id="log-out">
+                        @csrf
+                    </form>
                     <!--end::Menu item-->
                 </div>
                 <!--end::Menu-->

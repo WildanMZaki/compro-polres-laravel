@@ -104,7 +104,26 @@
                 </div>
                 <div class="w-100 d-flex flex-column semua-berita">
 
-                    {{-- 3 Berita terbaru tampilkan di sini --}}
+                    @if (!count($beritas))
+                        <div class="p-5 text-center">
+                            Belum ada berita yang ditambahkan
+                        </div>
+                    @else
+                        @foreach ($beritas as $berita)
+                            <div class="berita d-flex border p-2 mb-3 shadow" onclick="location.href = `{{ route('baca-berita', $berita->slug) }}`">
+                                <div class="gambar-berita w-25 pe-2">
+                                    <img src="{{ asset('img/berita/'.$berita->image )}}" alt="Gambar Berita" class="img-fluid">
+                                </div>
+                                <div class="info-berita w-75 d-flex flex-column">
+                                    <h6 class="m-0 judul-berita">{{ $berita->title }}</h6>
+                                    <small class="tanggal-berita my-2">
+                                        <i class="bx bx-calendar"></i>{{ date_convert($berita->created_at) }}
+                                    </small>
+                                    <small class="isi-berita">{!! Str::limit( strip_tags( $berita->content ), 40) !!}</small>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
 
                 </div>
             </div>

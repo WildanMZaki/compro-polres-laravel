@@ -24,12 +24,17 @@
         </section>
         <section class="row">
             <div class="col-10 offset-1 d-flex justify-content-center align-items-center">
-                <a href="./edit.html" class="text-decoration-none me-3">
+                <a href="{{ route('edit-profile') }}" class="text-decoration-none me-3">
                     <button type="button" class="btn btn-outline-dark">Edit</button>
                 </a>
-                <form action="post" action="{{ route('logout') }}">
+                @if ($user->role === 'admin')
+                    <a href="{{ route('admin-main') }}" class="text-decoration-none me-3">
+                        <button type="button" class="btn btn-outline-primary">Admin Page</button>
+                    </a>
+                @endif
+                <form method="post" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="btn btn-danger" name="logout">Logout</button>
+                    <button type="submit" class="btn btn-danger">Logout</button>
                 </form>
             </div>
         </section>

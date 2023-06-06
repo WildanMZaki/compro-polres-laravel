@@ -3,7 +3,7 @@
 @section('content')
 
 @php
-    $misi = json_decode($satker->misi);
+    // $misi = json_decode($satker->misi);
     $links = [
         'instagram' => 'https://www.instagram.com/',
         'email' => 'mailto:',
@@ -46,7 +46,8 @@
             </div>
             <div class="mission">
                 <h4>Misi</h4>
-                @if ($misi->p)
+                {!! $satker->misi !!}
+                {{-- @if ($misi->p)
                     <p>{{ $misi->p }}</p>
                 @endif
                 @if (count($misi->list))
@@ -55,7 +56,7 @@
                             <li>{{ $mi }}</li>
                         @endforeach
                     </ol>
-                @endif
+                @endif --}}
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
 
     <div class="col-xl-6">
         <!--begin::Statistics Widget 5-->
-        <a href="#" class="card bg-white hoverable card-xl-stretch mb-xl-8">
+        <a href="{{ route('admin-satker') }}" class="card bg-white hoverable card-xl-stretch mb-xl-8">
             <!--begin::Body-->
             <div class="card-body">
                 <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->
@@ -19,7 +19,7 @@
                 </span>
                 <!--end::Svg Icon-->
                 <div class="text-gray-900 text-dark fw-bolder fs-2 mb-2 mt-5">Satuan Kerja</div>
-                <div class="fw-bold text-gray-400 text-dark">10 Satuan Kerja, 50 Anggota</div>
+                <div class="fw-bold text-gray-400 text-dark">{{ $satker_total? $satker_total: 'Belum ada' }} Satuan Kerja</div>
             </div>
             <!--end::Body-->
         </a>
@@ -28,7 +28,7 @@
 
     <div class="col-xl-6">
         <!--begin::Statistics Widget 5-->
-        <a href="#" class="card bg-dark hoverable card-xl-stretch mb-xl-8">
+        <a href="{{ route('admin-berita') }}" class="card bg-dark hoverable card-xl-stretch mb-xl-8">
             <!--begin::Body-->
             <div class="card-body">
                 <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
@@ -42,7 +42,7 @@
                 </span>
                 <!--end::Svg Icon-->
                 <div class="text-white fw-bolder fs-2 mb-2 mt-5">Berita</div>
-                <div class="fw-bold text-white">10 Postingan, 120 Pembaca</div>
+                <div class="fw-bold text-white">{{ $berita_total? $berita_total: 'Belum ada' }} Postingan, {{ $reader }} Pembaca</div>
             </div>
             <!--end::Body-->
         </a>
@@ -87,7 +87,7 @@
                     <span class="fw-bolder text-dark">Berita Terbaru</span>
                     <span class="text-muted mt-1 fw-bold fs-7">Articles and publications</span>
                 </h3>
-                <div class="card-toolbar">
+                {{-- <div class="card-toolbar">
                     <!--begin::Menu-->
                     <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
@@ -180,84 +180,39 @@
                     </div>
                     <!--end::Menu 1-->
                     <!--end::Menu-->
-                </div>
+                </div> --}}
             </div>
             <!--end::Header-->
             <!--begin::Body-->
-            <div class="card-body pt-3">
-                <!--begin::Item-->
-                <div class="d-flex align-items-sm-center mb-7">
-                    <!--begin::Symbol-->
-                    <div class="symbol symbol-60px symbol-2by3 me-4">
-                        <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-20.jpg')"></div>
-                    </div>
-                    <!--end::Symbol-->
-                    <!--begin::Title-->
-                    <div class="d-flex flex-row-fluid flex-wrap align-items-center">
-                        <div class="flex-grow-1 me-2">
-                            <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">Cup &amp; Green</a>
-                            <span class="text-muted fw-bold d-block pt-1">Size: 87KB</span>
-                        </div>
-                        <span class="badge badge-light-success fs-8 fw-bolder my-2">Approved</span>
-                    </div>
-                    <!--end::Title-->
+            @if (!count($berita_terbaru))
+                <div class="text-center py-5">
+                    <p>Belum ada berita yang dipublikasikan</p>
+                    <a href="{{ route('tambah-berita') }}">Publikasikan berita baru</a>
                 </div>
-                <!--end::Item-->
-                <!--begin::Item-->
-                <div class="d-flex align-items-sm-center mb-7">
-                    <!--begin::Symbol-->
-                    <div class="symbol symbol-60px symbol-2by3 me-4">
-                        <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-19.jpg')"></div>
-                    </div>
-                    <!--end::Symbol-->
-                    <!--begin::Title-->
-                    <div class="d-flex flex-row-fluid flex-wrap align-items-center">
-                        <div class="flex-grow-1 me-2">
-                            <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">Lorem ipsum dolor</a>
-                            <span class="text-muted fw-bold d-block pt-1">Size: 1.2MB</span>
+            @else
+                <div class="card-body pt-3">
+                    <!--begin::Items-->
+                    @foreach ($berita_terbaru as $berita)
+                        <div class="d-flex align-items-sm-center mb-7">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-60px symbol-2by3 me-4">
+                                <div class="symbol-label" style="background-image: url('{{ asset("img/berita/".$berita->image) }}')"></div>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Title-->
+                            <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+                                <div class="flex-grow-1 me-2">
+                                    <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">{{ $berita->title }}</a>
+                                    <span class="text-muted fw-bold d-block pt-1">{{ date_convert($berita->created_at) }}</span>
+                                </div>
+                                <span class="badge badge-light-{{ ((!intval($berita->visitor))? 'danger': ((intval($berita->visitor) > 10)? 'success': 'warning')) }} fs-8 fw-bolder my-2">{{ $berita->visitor }} Pembaca</span>
+                            </div>
+                            <!--end::Title-->
                         </div>
-                        <span class="badge badge-light-warning fs-8 fw-bolder my-2">In Progress</span>
-                    </div>
-                    <!--end::Title-->
+                    @endforeach
+                    <!--end::Items-->
                 </div>
-                <!--end::Item-->
-                <!--begin::Item-->
-                <div class="d-flex align-items-sm-center mb-7">
-                    <!--begin::Symbol-->
-                    <div class="symbol symbol-60px symbol-2by3 me-4">
-                        <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-25.jpg')"></div>
-                    </div>
-                    <!--end::Symbol-->
-                    <!--begin::Title-->
-                    <div class="d-flex flex-row-fluid flex-wrap align-items-center">
-                        <div class="flex-grow-1 me-2">
-                            <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">Nike &amp; Blue</a>
-                            <span class="text-muted fw-bold d-block pt-1">Size: 87KB</span>
-                        </div>
-                        <span class="badge badge-light-success fs-8 fw-bolder my-2">Success</span>
-                    </div>
-                    <!--end::Title-->
-                </div>
-                <!--end::Item-->
-                <!--begin::Item-->
-                <div class="d-flex align-items-sm-center">
-                    <!--begin::Symbol-->
-                    <div class="symbol symbol-60px symbol-2by3 me-4">
-                        <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-24.jpg')"></div>
-                    </div>
-                    <!--end::Symbol-->
-                    <!--begin::Title-->
-                    <div class="d-flex flex-row-fluid flex-wrap align-items-center">
-                        <div class="flex-grow-1 me-2">
-                            <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">Red Boots</a>
-                            <span class="text-muted fw-bold d-block pt-1">Size: 345KB</span>
-                        </div>
-                        <span class="badge badge-light-danger fs-8 fw-bolder my-2">Rejected</span>
-                    </div>
-                    <!--end::Title-->
-                </div>
-                <!--end::Item-->
-            </div>
+            @endif
             <!--end::Body-->
         </div>
         <!--end::List Widget 7-->

@@ -3,14 +3,13 @@
 @section('content')
 
 @php
-    $isEdit = false;
-    if (isset($satker)) {
-        $isEdit = true;
-        $misi = json_decode($satker->misi);
-    }
+    $isEdit = isset($satker);
+    // if ($isEdit) {
+    //     $misi = json_decode($satker->misi);
+    // }
 @endphp
 
-<form action="{{ route(!$isEdit? 'simpan-satker': 'perbarui-satker', $isEdit? $satker->slug: null) }}" method="post">
+<form action="{{ route(!$isEdit? 'simpan-satker': 'perbarui-satker', $isEdit? $satker->slug: null) }}" method="post" enctype="multipart/form-data">
     @csrf
     @if ($isEdit)
         @method('patch')
@@ -19,19 +18,54 @@
     <div class="col-xl-10 offset-xl-1">
         <div class="mb-6">
             <label class="form-label fw-bold fs-3" for="satkerName">Nama Satuan Kerja</label>
-            <input type="text" name="name" class="form-control" placeholder="Tuliskan Nama Satker" id="satkerName" value="{{ $isEdit? $satker->name: '' }}" />
+            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Tuliskan Nama Satker" id="satkerName" value="{{ $isEdit? $satker->name: '' }}" />
+
+            @error('name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="mb-6">
+            <label class="form-label fw-bold fs-3" for="satkerImg">Upload Logo Satuan Kerja</label>
+            <input type="file" name="image" class="form-control  @error('image') is-invalid @enderror" id="satkerImg" />
+
+            @error('image')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
         <div class="mb-6">
             <label class="form-label fw-bold fs-3" for="satkerDescription">Deskripsi</label> <br>
-            <textarea name="deskripsi" id="satkerDescription" rows="4" class="w-100 rounded-1 border p-4" placeholder="Tambahkan Deskripsi">{{ $isEdit? $satker->deskripsi: '' }}</textarea>
+            <textarea name="deskripsi" id="satkerDescription" rows="4" class="w-100 rounded-1 border p-4 @error('deskripsi') is-invalid @enderror" placeholder="Tambahkan Deskripsi">{{ $isEdit? $satker->deskripsi: '' }}</textarea>
+
+            @error('deskripsi')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
         <div class="mb-6">
             <label class="form-label fw-bold fs-3" for="satkerVision">Visi</label> <br>
-            <textarea name="visi" id="satkerVision" rows="4" class="w-100 rounded-1 border p-4" placeholder="Tambahkan Visi">{{ $isEdit? $satker->visi: '' }}</textarea>
+            <textarea name="visi" id="satkerVision" rows="4" class="w-100 rounded-1 border p-4  @error('visi') is-invalid @enderror" placeholder="Tambahkan Visi">{{ $isEdit? $satker->visi: '' }}</textarea>
+
+            @error('visi')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
         <div class="mb-6">
             <label for="satkerMission" class="form-label fw-bold fs-3">Misi</label>
-            <input type="hidden" name="misi_type">
+            <textarea name="misi" id="my-editor" cols="30" rows="10" class="my-editor form-control @error('misi') is-invalid @enderror">{{ $isEdit? $satker->misi: '' }}</textarea>
+
+            @error('misi')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+            {{-- <input type="hidden" name="misi_type">
 
             <div class="mission-templates row {{ $isEdit? 'd-none': ''}}" >
                 <p>Pilih Template</p>
@@ -139,7 +173,7 @@
                         <button type="button" class="btn btn-success ms-10" id="addMissionListItem"><i class="bx bx-plus"></i> Tambah</button>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="mb-5">
             <label for="" class="form-label fw-bold fs-3">HotLinks</label>
@@ -194,3 +228,11 @@
 </form>
 
 @endsection
+
+@push('scripts')
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('my-editor');
+    </script>
+
+@endpush
