@@ -15,6 +15,8 @@
 
     {{-- Memanggil Online Scripts --}}
     @includeIf('layouts.scripts')
+
+    @stack('h-scripts')
 </head>
 <body>
 

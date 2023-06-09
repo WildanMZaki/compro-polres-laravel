@@ -26,7 +26,7 @@ class BeritaController extends Controller
     {
         $data['title'] = 'Baca Berita';
         $data['active'] = 'Berita';
-        $data['styles'] = ['common', 'berita'];
+        $data['styles'] = ['common'];
         $data['route_back'] = 'berita';
         $data['header'] = 'Baca Berita';
         $data['berita'] = $berita;
@@ -37,6 +37,10 @@ class BeritaController extends Controller
         }
         $berita->visitor += 1;
         $berita->save();
+
+        $data['other_news'] = Berita::orderBy('created_at', 'DESC')
+            ->orderBy('visitor', 'DESC')
+            ->get()->take(4);
 
         return view('menu/baca-berita', $data);
     }

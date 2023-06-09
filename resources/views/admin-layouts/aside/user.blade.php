@@ -59,18 +59,13 @@
                     <div class="separator my-2"></div>
                     <!--end::Menu separator-->
                     <!--begin::Menu item-->
-                    <div class="menu-item px-5">
+                    {{-- <div class="menu-item px-5">
                         <a href="../../demo8/dist/account/overview.html" class="menu-link px-5">My Profile</a>
-                    </div>
+                    </div> --}}
                     <!--end::Menu item-->
                     <!--begin::Menu separator-->
-                    <div class="separator my-2"></div>
+                    {{-- <div class="separator my-2"></div> --}}
                     <!--end::Menu separator-->
-                    <!--begin::Menu item-->
-                    <div class="menu-item px-5 my-1">
-                        <a href="../../demo8/dist/account/settings.html" class="menu-link px-5">Account Settings</a>
-                    </div>
-                    <!--end::Menu item-->
                     <!--begin::Menu item-->
                     <div class="menu-item px-5">
                         <a href="{{ route('logout')}}" class="menu-link px-5" onclick="event.preventDefault(); document.getElementById('log-out').submit();">Sign Out</a>
@@ -79,6 +74,9 @@
                         @csrf
                     </form>
                     <!--end::Menu item-->
+
+                    <div class="separator my-2"></div>
+
                 </div>
                 <!--end::Menu-->
                 <!--end::Action-->

@@ -3,8 +3,11 @@
 @section('content')
 
 <style>
+    /* * {border: solid red 1px} */
     #news-main-img img { height: 50vh; }
-    .berita, .comment-opt { cursor: pointer; }
+    .berita {
+        cursor: pointer;
+    }
     .berita:hover .judul-berita {
         border-bottom: solid 3px orange;
     }
@@ -120,24 +123,21 @@
                                 </div>
                             </div>
                             @if (isset($user))
-                            <div class="option">
-                                <div class="d-flex flex-column justify-content-start">
-                                    <div class="dropdown">
-                                        <i class="bx bx-menu-alt-right comment-opt" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                          <li>
-                                            @if ($comment->user->id === $user->id)
-                                                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById(`deleteForm{{$comment->id}}`).submit()">Hapus Komentar</a>
-                                                <form id="deleteForm{{$comment->id}}" action="{{ route('hapus-komentar', $comment->id) }}" method="post">@csrf @method('delete')</form>
-                                            @else
-                                                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById(`deleteForm{{$comment->id}}`)">Laporkan Komentar</a>
-                                                <form id="deleteForm{{$comment->id}}" action="{{ route('hapus-komentar', $comment->id) }}" method="post">@csrf @method('delete')</form>
-                                            @endif
-                                          </li>
-                                        </ul>
+                                @if ($comment->user->id === $user->id)
+                                    <div class="option">
+                                        <div class="d-flex flex-column justify-content-start">
+                                            <div class="dropdown">
+                                                <i class="bx bx-menu-alt-right comment-opt" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li>
+                                                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById(`deleteForm{{$comment->id}}`).submit()">Hapus Komentar</a>
+                                                        <form id="deleteForm{{$comment->id}}" action="{{ route('hapus-komentar', $comment->id) }}" method="post">@csrf @method('delete')</form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                @endif
                             @endif
                         </div>
                     @endforeach
@@ -148,7 +148,22 @@
             <section>
                 <h4>Baca juga:</h4>
                 <div class="w-100 d-flex flex-column berita-lainnya">
-
+                    @foreach ($other_news as $news)
+                        @if ($news->id !== $berita->id)
+                            <div class="berita d-flex border p-2 mb-3 w-100" onclick="location.href = `{{ route('baca-berita', $news->slug) }}`">
+                                <div class="gambar-berita w-25 pe-2">
+                                    <img src="{{ asset("img/berita/$news->image") }}" alt="Gambar Berita" class="img-fluid">
+                                </div>
+                                <div class="info-berita w-75 d-flex flex-column">
+                                    <h6 class="m-0 judul-berita">{{ $news->title }}</h6>
+                                    <small class="tanggal-berita my-2">
+                                        <i class="bx bx-calendar"></i>{{ date_convert($news->created_at) }}
+                                    </small>
+                                    <small class="isi-berita">{!! Str::limit( strip_tags( $news->content ), 70 ) !!}</small>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
             </section>
         </div>

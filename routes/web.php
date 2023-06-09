@@ -27,7 +27,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('main');
+Route::get('/', [HomeController::class, 'index'])->name('opening');
+Route::get('/MyHome', [HomeController::class, 'main'])->name('main');
 
 Route::get('/Satker', [SatkerController::class, 'index'])->name('satker');
 Route::get('/Satker/{satker:slug}', [SatkerController::class, 'detail_satker'])->name('detail-satker');
@@ -54,7 +55,6 @@ Route::middleware(['auth'])->group(function() {
 Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/Admin/', [AdminController::class, 'index'])->name('admin-main');
     Route::get('/Admin/Accounts', [AdminController::class, 'accounts'])->name('accounts');
-    Route::get('/Admin/Reports', [AdminController::class, 'reports'])->name('reports');
 
     Route::get('/Admin/Satker', [AdminSatkerController::class, 'index'])->name('admin-satker');
     Route::get('/Admin/Satker/{satker:slug}', [AdminSatkerController::class, 'detail'])->name('prev-satker');

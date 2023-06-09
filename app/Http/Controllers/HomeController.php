@@ -23,6 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        return view('opening');
+    }
+
+    public function main()
+    {
         $data['title'] = 'Polres Subang';
         $data['active'] = 'Home';
         $data['styles'] = ['common', '../module/slick/slick', '../module/slick/slick-theme', 'home'];

@@ -37,12 +37,4 @@ class AdminController extends Controller
         $data['active'] = 'Accounts';
         return view('admin/accounts', $data);
     }
-
-    public function reports()
-    {
-        $data['title'] = 'Reports';
-        $data['active'] = 'Reports';
-        $data['user'] = Auth::user();
-        return view('admin/reports', $data);
-    }
 }
