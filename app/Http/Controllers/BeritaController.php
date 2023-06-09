@@ -51,6 +51,12 @@ class BeritaController extends Controller
         return Redirect::back();
     }
 
+    public function delete_comment(Comment $comment)
+    {
+        $comment->delete();
+        return redirect()->back();
+    }
+
     public function comment_like(Comment $comment)
     {
         $like = $comment->likes()->where('user_id', '=', Auth::id());

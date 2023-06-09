@@ -4,7 +4,7 @@
 
 <style>
     #news-main-img img { height: 50vh; }
-    .berita { cursor: pointer; }
+    .berita, .comment-opt { cursor: pointer; }
     .berita:hover .judul-berita {
         border-bottom: solid 3px orange;
     }
@@ -33,7 +33,7 @@
     @media (max-width: 660px) {
         #news-main-img img { width: 100%; height: auto; }
         .commentator-photo {
-            flex-basis: 18% !important;
+            flex-basis: 25% !important;
         }
         .commentator-photo img {
             width: 100%;
@@ -119,6 +119,26 @@
                                     </span>
                                 </div>
                             </div>
+                            @if (isset($user))
+                            <div class="option">
+                                <div class="d-flex flex-column justify-content-start">
+                                    <div class="dropdown">
+                                        <i class="bx bx-menu-alt-right comment-opt" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                          <li>
+                                            @if ($comment->user->id === $user->id)
+                                                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById(`deleteForm{{$comment->id}}`).submit()">Hapus Komentar</a>
+                                                <form id="deleteForm{{$comment->id}}" action="{{ route('hapus-komentar', $comment->id) }}" method="post">@csrf @method('delete')</form>
+                                            @else
+                                                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById(`deleteForm{{$comment->id}}`)">Laporkan Komentar</a>
+                                                <form id="deleteForm{{$comment->id}}" action="{{ route('hapus-komentar', $comment->id) }}" method="post">@csrf @method('delete')</form>
+                                            @endif
+                                          </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     @endforeach
                 @endif

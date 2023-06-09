@@ -40,6 +40,7 @@ Route::get('/Test', [BeritaController::class, 'test'])->name('test');
 
 Route::middleware(['auth'])->group(function() {
     Route::post('/Berita/comment/{berita:slug}', [BeritaController::class, 'store_comment'])->name('simpan-komentar');
+    Route::delete('/Berita/delete/{comment}', [BeritaController::class, 'delete_comment'])->name('hapus-komentar');
     Route::post('/Berita/like/{comment}', [BeritaController::class, 'comment_like'])->name('like-komentar');
     Route::post('/Berita/dislike/{comment}', [BeritaController::class, 'comment_dislike'])->name('dislike-komentar');
 
