@@ -27,15 +27,15 @@
         </div>
     </div>
 @else
-    <div class="d-flex flex-wrap semua-satker">
+    <div class="row d-flex flex-wrap semua-satker">
         @foreach ($satkers as $satker)
-            <div class="satker my-3">
-                <div class="card card-custom card-flush">
+            <div class="col-xl-4 col-6 satker my-3 cursor-pointer" onclick="location.href = `{{ route('prev-satker', $satker->slug) }}`">
+                <div class="card card-custom card-flush d-flex flex-column align-items-center">
                     <div class="card-header d-flex justify-content-center">
                         <h3 class="card-title border-bottom pb-2 satker-name">{{ $satker->name }}</h3>
                     </div>
-                    <div class="card-body py-5 d-flex flex-lg-column flex-row align-items-center satker-body">
-                        <img src="{{ asset('img/'.((!$satker->image)? 'blogo.png': 'satker/'.$satker->image)) }}" alt="" class="img-fluid w-50 h-50">
+                    <div class="card-body py-5 d-flex flex-lg-column flex-row align-items-center justify-content-center satker-body">
+                        <img src="{{ asset('img/'.((!$satker->image)? 'blogo.png': 'satker/'.$satker->image)) }}" alt="" class="img-fluid w-75">
                         <p class="h-25 satker-description text-center">{{ Str::limit( $satker->deskripsi, 60 ) }}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-lg-end justify-content-center">

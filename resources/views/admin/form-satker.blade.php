@@ -18,7 +18,7 @@
     <div class="col-xl-10 offset-xl-1">
         <div class="mb-6">
             <label class="form-label fw-bold fs-3" for="satkerName">Nama Satuan Kerja</label>
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Tuliskan Nama Satker" id="satkerName" value="{{ $isEdit? $satker->name: '' }}" />
+            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Tuliskan Nama Satker" id="satkerName" value="{{ $isEdit? $satker->name: old('name') }}" />
 
             @error('name')
                 <span class="invalid-feedback" role="alert">
@@ -28,7 +28,7 @@
         </div>
         <div class="mb-6">
             <label class="form-label fw-bold fs-3" for="satkerImg">Upload Logo Satuan Kerja</label>
-            <input type="file" name="image" class="form-control  @error('image') is-invalid @enderror" id="satkerImg" />
+            <input type="file" name="image" class="form-control  @error('image') is-invalid @enderror" id="satkerImg" value="old('image')" />
 
             @error('image')
                 <span class="invalid-feedback" role="alert">
@@ -38,7 +38,7 @@
         </div>
         <div class="mb-6">
             <label class="form-label fw-bold fs-3" for="satkerDescription">Deskripsi</label> <br>
-            <textarea name="deskripsi" id="satkerDescription" rows="4" class="w-100 rounded-1 border p-4 @error('deskripsi') is-invalid @enderror" placeholder="Tambahkan Deskripsi">{{ $isEdit? $satker->deskripsi: '' }}</textarea>
+            <textarea name="deskripsi" id="satkerDescription" rows="4" class="w-100 rounded-1 border p-4 @error('deskripsi') is-invalid @enderror" placeholder="Tambahkan Deskripsi">{{ $isEdit? $satker->deskripsi: old('deskripsi') }}</textarea>
 
             @error('deskripsi')
                 <span class="invalid-feedback" role="alert">
@@ -48,7 +48,7 @@
         </div>
         <div class="mb-6">
             <label class="form-label fw-bold fs-3" for="satkerVision">Visi</label> <br>
-            <textarea name="visi" id="satkerVision" rows="4" class="w-100 rounded-1 border p-4  @error('visi') is-invalid @enderror" placeholder="Tambahkan Visi">{{ $isEdit? $satker->visi: '' }}</textarea>
+            <textarea name="visi" id="satkerVision" rows="4" class="w-100 rounded-1 border p-4  @error('visi') is-invalid @enderror" placeholder="Tambahkan Visi">{{ $isEdit? $satker->visi: old('visi') }}</textarea>
 
             @error('visi')
                 <span class="invalid-feedback" role="alert">
@@ -58,7 +58,7 @@
         </div>
         <div class="mb-6">
             <label for="satkerMission" class="form-label fw-bold fs-3">Misi</label>
-            <textarea name="misi" id="my-editor" cols="30" rows="10" class="my-editor form-control @error('misi') is-invalid @enderror">{{ $isEdit? $satker->misi: '' }}</textarea>
+            <textarea name="misi" id="my-editor" cols="30" rows="10" class="my-editor form-control @error('misi') is-invalid @enderror">{{ $isEdit? $satker->misi: old('misi') }}</textarea>
 
             @error('misi')
                 <span class="invalid-feedback" role="alert">
@@ -188,7 +188,7 @@
                             <option value="twitter">Twitter</option>
                             <option value="tik-tok">Tik tok</option>
                         </select>
-                        <input type="text" class="form-control" name="contacts[]">
+                        <input type="text" class="form-control" name="contacts[]" value="">
                         <button type="button" class="btn btn-danger m-1 p-3 remove-contact" title="Hapus Contact" data-num="1"><i class="bx bx-x fs-3 m-2"></i></button>
                     </div>
                 @else

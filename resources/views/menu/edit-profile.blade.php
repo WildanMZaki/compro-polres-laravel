@@ -34,8 +34,8 @@
                 <span class="p-2 bg-edark text-center rounded-circle bg-transparent">
                     <i class="bx bx-edit fs-4 text-warning m-0 invisible"></i>
                 </span>
-                <img src="{{ asset('img/user/'.(($user->image)? $user->image: 'anonim.jpg')) }}" alt="Profile Photo" id="profilePhoto" class="img-fluid border m-0 p-0 border-secondary border-2 rounded-circle">
-                <span class="p-2 bg-edark editPhoto text-center rounded-circle">
+                <img src="{{ asset('img/user/'.$user->image) }}" alt="Profile Photo" id="profilePhoto" class="img-fluid border m-0 p-0 border-secondary border-2 rounded-circle">
+                <span class="p-2 bg-edark editPhoto text-center rounded-circle" onclick="location.href = `{{ route('edit-foto')}}`">
                     <i class="bx bx-edit fs-4 text-warning m-0"></i>
                 </span>
             </div>

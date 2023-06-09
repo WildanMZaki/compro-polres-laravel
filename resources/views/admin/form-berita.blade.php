@@ -2,6 +2,11 @@
 
 @section('content')
 
+<!--begin::Page Vendor Stylesheets(used by this page)-->
+<link href="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+<!--end::Page Vendor Stylesheets-->
+
 @php
     $isEdit = isset($berita);
 @endphp
@@ -26,8 +31,10 @@
         <div class="mb-5">
             @if ($isEdit)
                 <label class="form-label fw-bold fs-3">Gambar sebelumnya:</label><br>
-                <img src="{{ asset('img/berita/'.$berita->image) }}" alt="Image Preview" class="img-fluid mb-5 mx-4 w-75 text-center"><br>
-                <h6 class="text-primary mb-5">Jangan upload gambar lain jika tidak ingin melakukan terhadap gambar</h6>
+                <div class="d-flex flex-column align-items-center">
+                    <img src="{{ asset('img/berita/'.$berita->image) }}" alt="Image Preview" class="img-fluid mb-5 mx-4 w-75 text-center"><br>
+                    <h6 class="text-primary mb-5">Jangan upload gambar lain jika tidak ingin melakukan perubahan terhadap gambar</h6>
+                </div>
             @endif
             <label for="newsImage" class="form-label fw-bold fs-3">{{ $isEdit? 'Atau upload gambar baru:': 'Upload gambar' }}</label>
             <input type="file" name="image" id="newsImage" class="form-control  @error('image') is-invalid @enderror">
@@ -61,6 +68,76 @@
 </div>
 </form>
 
+<div class="row mt-10">
+    <h2 class="mb-4">Image Manager</h2>
+    {{-- <div class="row">
+        <div class="col-xl-4 col-sm-6">
+            <div class="card p-2">
+                <div class="card-body">
+                    <h5 class="text-center">Judul gambar</h5>
+                    <img src="{{ asset('img/berita/G.jpg') }}" alt="Foto" class="img-fluid mb-5">
+                    <div class="d-flex align-items-center">
+                        <small class="badge badge-light-success cursor-pointer">
+                            {{ asset('img/berita/G.jpg') }}
+                        </small>
+                        <i class="bx bx-copy fs-3"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div> --}}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card py-5 px-4">
+                <div class="row mb-6">
+                    <form action="{{ route('simpan-gambar-berita') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <label for="inputImages" class="form-label">Upload 1 atau lebih gambar untuk menambahkan konten gambar pada berita</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control @error('gambar_berita') is-invalid @enderror" id="inputImages" name="gambar_berita[]" aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple required>
+                            <button class="btn btn-success" type="submit" id="inputGroupFileAddon04">Upload gambar baru</button>
+                        </div>
+
+                        @error('gambar_berita')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </form>
+                </div>
+                <h5>Daftar gambar</h5>
+                <table class="table border text-center table-striped table-row-bordered gy-5 gs-7" id="imageManager">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Preview</th>
+                            <th>Nama Gambar</th>
+                            <th>Get Link</th>
+                        </tr>
+                    </thead>
+                    <tbody id="imgs_body">
+                        @if (count($images))
+                            @foreach ($images as $i => $image)
+                                <tr>
+                                    <td>{{ $i+1 }}</td>
+                                    <td class="w-25"><img src="{{ asset("img/berita/$image->name") }}" alt="Foto untuk berita" class="img-fluid"></td>
+                                    <td>{{ $image->name }}</td>
+                                    <td>
+                                        <button class="btn btn-secondary text-primary copy-img-link" type="button" data-link="{{ asset("img/berita/$image->name") }}">
+                                            <i class="bx bx-copy fs-3"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('scripts')
@@ -71,6 +148,56 @@
     <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('my-editor');
+    </script>
+    {{-- <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script> --}}
+    <script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
+	<script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script>
+        "use strict";
+
+        // Class definition
+        var KTDatatableDemo = function () {
+
+            // Public methods
+            return {
+                init: function () {
+                }
+            }
+        }();
+
+        // On document ready
+        KTUtil.onDOMContentLoaded(function () {
+            KTDatatableDemo.init();
+        });
+        $(document).ready(function(){
+            $('#imageManager').DataTable();
+        });
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+
+        $('#imgs_body').on('click', '.copy-img-link',(e) => {
+            const link = e.currentTarget.dataset.link;
+            navigator.clipboard.writeText(link);
+            toastr.success("Link sudah disalin");
+        });
     </script>
 
 @endpush

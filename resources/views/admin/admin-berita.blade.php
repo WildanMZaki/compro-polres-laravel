@@ -9,6 +9,12 @@
     #semua-berita {
         align-items: stretch
     }
+
+    .berita img {
+        height: 200px;
+        object-fit: fill;
+        object-position: center;
+    }
 </style>
 
 <div class="row g-5 g-xl-8 mb-5 d-flex justify-content-between">
@@ -97,7 +103,7 @@
                     </div>
                     <!--end::Header-->
                     <!--begin::Body-->
-                    <div class="card-body p-5">
+                    <div class="card-body p-5 d-flex justify-content-center align-items-center">
                         <img src="{{ asset('img/berita/'.$berita->image)}}" alt="Gambar Berita" class="img-fluid rounded-3">
                     </div>
                     <!--end::Body-->

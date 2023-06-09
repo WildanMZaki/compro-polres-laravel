@@ -5,7 +5,7 @@
     <div class="row my-4 mx-lg-5 mx-2 py-4 px-3 border border-4 rounded-1 shadow">
         <section class="row mb-4">
             <section class="col-lg-4 offset-lg-1 picture d-flex justify-content-center">
-                <img src="{{ asset('img/anonim.jpg') }}" alt="Profile Photo" id="profilePhoto" class="img-fluid border m-0 p-0 border-secondary border-2 rounded-circle">
+                <img src="{{ asset("img/user/$user->image") }}" alt="Profile Photo" id="profilePhoto" class="img-fluid border m-0 p-0 border-secondary border-2 rounded-circle">
             </section>
             <section class="col-lg-5 ">
                 <div class="border-bottom border-1 mb-3">

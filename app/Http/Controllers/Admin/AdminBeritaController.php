@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Berita;
+use App\Models\NewsImage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -58,6 +59,7 @@ class AdminBeritaController extends Controller
             'New'
         ];
         $data['user'] = Auth::user();
+        $data['images'] = NewsImage::all();
         return view('admin/form-berita', $data);
     }
 
@@ -154,5 +156,30 @@ class AdminBeritaController extends Controller
         File::delete(public_path('img/berita/'.$berita->image));
         $berita->delete();
         return Redirect::to('/Admin/Berita');
+    }
+
+    public function save_news_images(Request $request)
+    {
+        $this->validate($request, [
+            'gambar_berita' => 'required',
+            'gambar_berita.*' => 'image',
+            'gambar_berita.*' => 'mimes:jpg,jpeg,png'
+        ], [
+            'gambar_berita.required' => 'Tolong input setidaknya satu gambar',
+            'gambar_berita.image' => 'Tolong inputkan gambar',
+            'gambar_berita.mimes' => 'Ekstensi yang diizinkan adalah .jpg, .jpeg, dan .png'
+        ]);
+        $files = [];
+        foreach ($request->file('gambar_berita') as $file) {
+            $filename = time().'-'.$file->getClientOriginalName();
+            $img = Image::make($file);
+            $img->save(public_path('img/berita/') . $filename);
+            $files[] = [
+                'name' => $filename,
+            ];
+        }
+        NewsImage::insert($files);
+
+        return redirect()->back()->withInput();
     }
 }

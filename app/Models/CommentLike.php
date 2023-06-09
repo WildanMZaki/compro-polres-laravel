@@ -10,6 +10,8 @@ class CommentLike extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id'];
+
     public function comment()
     {
         return $this->belongsTo(Comment::class);

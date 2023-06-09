@@ -1,13 +1,13 @@
-.satker {
-    flex-basis: 33%;
-    max-height: 40vh;
-    min-height: 40vh;
+.satker .satker-body {
+    height: 50% !important;
+
 }
 .satker .card {
     margin: 7px;
 }
 
 .satker-body img {
+    height: 200px;
     object-fit: contain;
 }
 
@@ -21,10 +21,8 @@
 
 
 @media (max-width: 660px) {
-    .satker {
-        flex-basis: 40%;
-        max-height: 30vh;
-        min-height: 30vh;
+    .satker-body img {
+        height: 80px;
     }
     .satker-body p { display: none; }
 }

@@ -31,7 +31,10 @@ class BeritaController extends Controller
         $data['header'] = 'Baca Berita';
         $data['berita'] = $berita;
         $data['comments'] = $berita->comments;
-
+        $data['scripts'] = ['baca-berita'];
+        if (Auth::check()) {
+            $data['user'] = Auth::user();
+        }
         $berita->visitor += 1;
         $berita->save();
 
@@ -56,20 +59,50 @@ class BeritaController extends Controller
                 'user_id' => Auth::id()
             ]);
             $like_status = true;
+            $dislike = $comment->dislikes()->where('user_id', '=', Auth::id());
+            if (count($dislike->get())) {
+                $dislike->delete();
+            }
         } else {
             $like->delete();
             $like_status = false;
         }
 
-        return response()->json(['message' => 'success', 'like_status' => $like_status]);
+        return response()->json([
+            'message' => 'success',
+            'like_status' => $like_status,
+            'likes' => count($comment->likes),
+            'dislikes' => count($comment->dislikes),
+        ]);
     }
 
     public function comment_dislike(Comment $comment)
     {
-        $comment->likes()->create([
-            'user_id' => Auth::id()
-        ]);
+        $dislike = $comment->dislikes()->where('user_id', '=', Auth::id());
+        if (!count($dislike->get())) {
+            $comment->dislikes()->create([
+                'user_id' => Auth::id()
+            ]);
+            $dislike_status = true;
+            $like = $comment->likes()->where('user_id', '=', Auth::id());
+            if (count($like->get())) {
+                $like->delete();
+            }
+        } else {
+            $dislike->delete();
+            $dislike_status = false;
+        }
 
-        return response()->json(['message' => 'success']);
+        return response()->json([
+            'message' => 'success',
+            'dislike_status' => $dislike_status,
+            'likes' => count($comment->likes),
+            'dislikes' => count($comment->dislikes),
+        ]);
+    }
+
+    public function test()
+    {
+        return response()->json(['status' => 'success']);
     }
 }

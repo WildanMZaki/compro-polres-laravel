@@ -21,6 +21,11 @@
     .commentator-photo {
         flex-basis: 12%;
     }
+    .commentator-photo img {
+        width: 100%;
+        height: 50%;
+        object-fit: cover;
+    }
     .comment {
         flex-basis: 88%;
     }
@@ -29,6 +34,11 @@
         #news-main-img img { width: 100%; height: auto; }
         .commentator-photo {
             flex-basis: 18% !important;
+        }
+        .commentator-photo img {
+            width: 100%;
+            height: 60%;
+            object-fit: cover;
         }
         .comment {
             flex-basis: 82% !important;
@@ -79,7 +89,7 @@
                 </div>
             </section>
             <!-- Daftar Komentar -->
-            <section class="d-flex flex-column">
+            <section class="d-flex flex-column" id="commentList">
                 @if (!count($comments))
                     <div class="p-5">
                         <p class="text-muted text-center">Belum ada komentar</p>
@@ -100,13 +110,12 @@
                                 <p>{{ $comment->comment }}</p>
                                 <div class="d-flex align-items-center comment-actions">
                                     <span class="me-2">
-                                        <i data-id="{{ $comment->id }}" data-link="{{ route('like-komentar', $comment->id) }}" class="bx bx-like me-2 cursor-pointer like"></i><span>{{ $comment->like }}</span>
+                                        <i id="likeBtn{{$comment->id}}" data-id="{{ $comment->id }}" data-link="{{ route('like-komentar', $comment->id) }}" data-token="{{ csrf_token() }}" class="bx bx-like me-2 cursor-pointer like {{ (isset($user))? ((count($comment->likes()->where('user_id', '=', $user->id)->get()))? 'text-primary': 'text-dark'): 'text-dark' }}"></i>
+                                        <span id="likeComment{{$comment->id}}">{{ count($comment->likes) }}</span>
                                     </span>
                                     <span class="me-4">
-                                        <i data-id="{{ $comment->id }}" data-link="{{ route('dislike-komentar', $comment->id) }}" class="bx bx-dislike me-2 cursor-pointer dislike"></i><span>{{ $comment->dislike }}</span>
-                                    </span>
-                                    <span>
-                                        <small class="text-muted">Balas</small>
+                                        <i id="dislikeBtn{{$comment->id}}" data-id="{{ $comment->id }}" data-link="{{ route('dislike-komentar', $comment->id) }}" data-token="{{ csrf_token() }}" class="bx bx-dislike me-2 cursor-pointer dislike {{ (isset($user))? ((count($comment->dislikes()->where('user_id', '=', $user->id)->get()))? 'text-primary': 'text-dark'): 'text-dark' }}"></i>
+                                        <span id="dislikeComment{{$comment->id}}">{{ count($comment->dislikes) }}</span>
                                     </span>
                                 </div>
                             </div>

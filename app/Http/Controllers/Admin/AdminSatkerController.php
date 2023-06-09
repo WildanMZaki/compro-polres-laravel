@@ -25,6 +25,24 @@ class AdminSatkerController extends Controller
         return view('admin/admin-satker', $data);
     }
 
+    public function detail(Satker $satker)
+    {
+        $data['title'] = 'Detail Satuan Kerja';
+        $data['active'] = 'Satuan Kerja';
+        $data['header'] = 'Detail Satuan Kerja';
+        $data['route_back'] = 'admin-satker';
+        $data['breadcumbs'] = [
+            [
+                'label' => 'Satuan Kerja',
+                'route' => 'admin-satker'
+            ],
+            $satker->name
+        ];
+        $data['satker'] = $satker;
+        $data['user'] = Auth::user();
+        return view('admin/detail-satker', $data);
+    }
+
     public function add()
     {
         $data['title'] = 'Tambah Satuan Kerja';
@@ -52,13 +70,11 @@ class AdminSatkerController extends Controller
             'deskripsi' => 'required',
             'visi' => 'required',
             'misi' => 'required',
-            'contacts' => 'required',
         ];
         $messages = [
-            'image.required' => 'Maaf tolong pilih satu gambar utama',
+            'image.required' => 'Maaf tolong pilih sebuah logo',
             'image.image' => 'Maaf tolong input gambar',
             'image.mimes' => 'Maaf jenis gambar yang diizinkan adalah .jpg, .jpeg, .png, .gif',
-            'contacts.required' => 'Setidaknya sertakan satu kontak',
             'required' => 'Maaf kolom ini harus diisikan',
             'name.unique' => 'Nama satuan kerja tersebut telah ada, tolong masukan nama yang lain',
             'name.max' => 'Maksimal karakter untuk nama karakter adalah 100 karakter'
@@ -96,15 +112,19 @@ class AdminSatkerController extends Controller
 
         $contacts = [];
         foreach ($request->contacts as $ind => $contact) {
-            $contacts[] = [
-                'type' => $request->contact_type[$ind],
-                'contact' => $contact
-            ];
+            if ($contact) {
+                $contacts[] = [
+                    'type' => $request->contact_type[$ind],
+                    'contact' => $contact
+                ];
+            }
         }
-        $allSatker = collect(Satker::all());
-        $satker = $allSatker->firstWhere('slug', '==', sluger($request->name));
-        $s = Satker::find($satker->id);
-        $s->satker_contacts()->createMany($contacts);
+        if (count($contacts)) {
+            $allSatker = collect(Satker::all());
+            $satker = $allSatker->firstWhere('slug', '==', sluger($request->name));
+            $s = Satker::find($satker->id);
+            $s->satker_contacts()->createMany($contacts);
+        }
 
         return Redirect::to('/Admin/Satker');
     }
@@ -134,14 +154,13 @@ class AdminSatkerController extends Controller
     {
         $rules = [
             'name' => 'required|max:100',
-            'image' => 'required|image|mimes:jpg,jpeg,png,gif',
+            'image' => 'image|mimes:jpg,jpeg,png,gif',
             'deskripsi' => 'required',
             'visi' => 'required',
             'misi' => 'required',
             'contacts' => 'required',
         ];
         $messages = [
-            'image.required' => 'Maaf tolong pilih satu gambar utama',
             'image.image' => 'Maaf tolong input gambar',
             'image.mimes' => 'Maaf jenis gambar yang diizinkan adalah .jpg, .jpeg, .png, .gif',
             'contacts.required' => 'Setidaknya sertakan satu kontak',
@@ -182,16 +201,18 @@ class AdminSatkerController extends Controller
         $satker->misi = $request->misi;
         $satker->save();
 
-        $satker->satker_contacts()->where('satker_id', $satker->id)->delete();
+        if (count($request->contacts)) {
+            $satker->satker_contacts()->where('satker_id', $satker->id)->delete();
 
-        $contacts = [];
-        foreach ($request->contacts as $ind => $contact) {
-            $contacts[] = [
-                'type' => $request->contact_type[$ind],
-                'contact' => $contact
-            ];
+            $contacts = [];
+            foreach ($request->contacts as $ind => $contact) {
+                $contacts[] = [
+                    'type' => $request->contact_type[$ind],
+                    'contact' => $contact
+                ];
+            }
+            $satker->satker_contacts()->createMany($contacts);
         }
-        $satker->satker_contacts()->createMany($contacts);
 
         return Redirect::to('/Admin/Satker');
     }
