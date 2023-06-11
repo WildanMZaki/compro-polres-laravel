@@ -34,6 +34,18 @@ class ProfileController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'telepon_number' => 'required|min:11',
+        ], [
+            'required' => 'Masih ada kolom yang berlum kamu isi',
+            'string' => 'Input harus berupa teks',
+            'email' => 'Email kamu belum valid',
+            'max' => 'Karakter yang diizikan adalah 255 karakter',
+            'min' => 'Tolong tuliskan setidaknya :min karakter',
+        ]);
+
         $user->name = $request->name;
         $user->email = $request->email;
         $user->telepon_number = $request->telepon_number;

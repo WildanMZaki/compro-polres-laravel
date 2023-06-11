@@ -8,6 +8,9 @@ use App\Models\Satker;
 use App\Models\Berita;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -35,6 +38,47 @@ class AdminController extends Controller
         $data['title'] = 'Admin List';
         $data['user'] = Auth::user();
         $data['active'] = 'Accounts';
+        $data['header'] = 'Daftar Akun Administrator';
+        $data['breadcumbs'] = ['Akun'];
+        $data['administrators'] = User::where('role', '!=', 'user')->get();
         return view('admin/accounts', $data);
+    }
+
+    public function save_account(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'telepon_number' => 'required|min:11',
+            'password' => 'required|string|min:8|confirmed',
+        ], [
+            'required' => 'Masih ada kolom yang berlum kamu isi',
+            'unique' => 'Email sudah digunakan',
+            'string' => 'Input harus berupa teks',
+            'email' => 'Email kamu belum valid',
+            'max' => 'Karakter yang diizikan adalah 255 karakter',
+            'min' => 'Tolong tuliskan setidaknya :min karakter',
+            'confirmed' => 'Password tidak sesuai dengan konfirmasi'
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput()->with('progress_error', 'create');
+        }
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'telepon_number' => $request->telepon_number,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()->with('progress_success', 'create');
+    }
+
+    public function remove_account(User $user)
+    {
+        $user->delete();
+        return redirect()->back();
     }
 }

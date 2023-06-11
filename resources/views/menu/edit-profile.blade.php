@@ -46,15 +46,33 @@
                 @method('patch')
                 <div class="mb-3">
                     <label for="namaInput" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="namaInput" placeholder="Nama anda" class="w-100" name="name" value="{{ $user->name }}">
+                    <input type="text" class="form-control  @error('name') is-invalid @enderror" id="namaInput" placeholder="Nama anda" class="w-100" name="name" value="{{ $user->name }}">
+
+                    @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="emailInput" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="emailInput" class="w-100" placeholder="name@example.com" name="email" value="{{ $user->email }}">
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" class="w-100" placeholder="name@example.com" name="email" value="{{ $user->email }}">
+
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="mb-4">
                     <label for="noInput" class="form-label">No. Telepon</label>
-                    <input type="number" class="form-control" id="noInput" placeholder="621234567890" class="w-100" name="telepon_number" value="{{ $user->telepon_number }}">
+                    <input type="number" class="form-control  @error('telepon_number') is-invalid @enderror" id="noInput" placeholder="621234567890" class="w-100" name="telepon_number" value="{{ $user->telepon_number }}">
+
+                    @error('telepon_number')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">Perbarui <i class="bx bxs-save"></i></button>

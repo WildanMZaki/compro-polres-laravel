@@ -36,9 +36,6 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
-            return redirect()->route('admin-main');
-        }
         $this->middleware('guest')->except('logout');
     }
 }

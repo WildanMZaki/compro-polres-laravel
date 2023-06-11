@@ -55,6 +55,8 @@ Route::middleware(['auth'])->group(function() {
 Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/Admin/', [AdminController::class, 'index'])->name('admin-main');
     Route::get('/Admin/Accounts', [AdminController::class, 'accounts'])->name('accounts');
+    Route::post('/Admin/Accounts', [AdminController::class, 'save_account'])->name('simpan-akun');
+    Route::delete('/Admin/Accounts/{user}', [AdminController::class, 'remove_account'])->name('hapus-akun');
 
     Route::get('/Admin/Satker', [AdminSatkerController::class, 'index'])->name('admin-satker');
     Route::get('/Admin/Satker/{satker:slug}', [AdminSatkerController::class, 'detail'])->name('prev-satker');

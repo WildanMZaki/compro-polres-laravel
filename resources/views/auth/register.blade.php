@@ -60,7 +60,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="noInput" class="form-label">No. Telepon</label>
-                            <input type="number" name="telepon_number" class="form-control" id="noInput" placeholder="621234567890" class="w-100" required>
+                            <input type="number" name="telepon_number" class="form-control @error('telepon_number') is-invalid @enderror" id="noInput" placeholder="621234567890" class="w-100" required value="{{ old('telepon_number') }}">
+
+                            @error('telepon_number')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <div class="mb-4">

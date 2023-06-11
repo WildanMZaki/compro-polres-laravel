@@ -52,7 +52,15 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'telepon_number' => ['required', 'min:11'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'required' => 'Kolom ini harus diisi',
+            'email' => 'Email belum valid',
+            'unique' => 'Email tersebut sudah digunakan',
+            'max' => 'Karakter diizinkan adalah sebanyak :max karakter',
+            'min' => 'Sedikitnya harus memasukan sebanyak :min karakter',
+            'confirmed' => 'Password tidak sesuai dengan konfirmasi'
         ]);
     }
 
