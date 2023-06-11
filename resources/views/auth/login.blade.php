@@ -73,7 +73,7 @@
                         <button type="submit" class="btn btn-primary">Login <i class="bx bx-log-in"></i></button>
                         @if (Route::has('password.request'))
                             <a class="btn btn-link" href="{{ route('password.request') }}">
-                                {{ __('Forgot Your Password?') }}
+                                {{ __('Lupa Password?') }}
                             </a>
                         @endif
                     </div>

@@ -5,7 +5,7 @@ function sendReq(url, method, token, success_cb, error_cb) {
         headers: {'X-CSRF-TOKEN': token},
         dataType: 'JSON',
         success: function (data) {
-            console.log(data);
+            // console.log(data);
             success_cb(data);
         },
         error: function (jqXHR, textStatus, errorThrown) {

@@ -52,7 +52,7 @@ class AdminController extends Controller
             'telepon_number' => 'required|min:11',
             'password' => 'required|string|min:8|confirmed',
         ], [
-            'required' => 'Masih ada kolom yang berlum kamu isi',
+            'required' => 'Masih ada kolom yang belum kamu isi',
             'unique' => 'Email sudah digunakan',
             'string' => 'Input harus berupa teks',
             'email' => 'Email kamu belum valid',
@@ -74,6 +74,39 @@ class AdminController extends Controller
         ]);
 
         return redirect()->back()->with('progress_success', 'create');
+    }
+
+    public function update_account(Request $request, User $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'name_update' => 'required|string|max:255',
+            'email_update' => 'required|string|email|max:255',
+            'telepon_number_update' => 'required|min:11',
+        ], [
+            'required' => 'Masih ada kolom yang belum kamu isi',
+            'string' => 'Input harus berupa teks',
+            'email' => 'Email kamu belum valid',
+            'max' => 'Karakter yang diizikan adalah 255 karakter',
+            'min' => 'Tolong tuliskan setidaknya :min karakter',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors'=>$validator->errors()], 400);
+        }
+
+        $user->name = $request->name_update;
+        $user->email = $request->email_update;
+        $user->telepon_number = $request->telepon_number_update;
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            'id' => $user->id,
+            'admin_name' => $request->name_update,
+            'admin_email' => $request->email_update,
+            'admin_telepon_number' => $request->telepon_number_update,
+            'is_online' => Auth::id() === $user->id
+        ]);
     }
 
     public function remove_account(User $user)

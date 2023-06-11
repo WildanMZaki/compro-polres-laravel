@@ -3,22 +3,22 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+        <div class="col-md-8 col-lg-6">
+            <div class="card pb-5 my-5 shadow">
+                <div class="card-header mb-5 bg-edark text-warning text-center fs-3">{{ __('Verifikasi Alamat Email Anda') }}</div>
 
                 <div class="card-body">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
+                            {{ __('Link verifikasi email yang baru telah terkirim ke email anda') }}
                         </div>
                     @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
+                    {{ __('Sebelum diproses, tolong periksa email anda untuk mendapatkan link verifikasi email.') }}
+                    {{ __('Jika kamu tidak menerima email') }},
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('Kirim ulang') }}</button>.
                     </form>
                 </div>
             </div>

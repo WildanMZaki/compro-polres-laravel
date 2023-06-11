@@ -36,11 +36,11 @@
                             @foreach ($administrators as $i => $admin)
                                 <tr>
                                     <td>{{ $i+1 }}</td>
-                                    <td>{{ $admin->name }}</td>
-                                    <td>{{ $admin->email }}</td>
-                                    <td>{{ $admin->telepon_number }}</td>
+                                    <td id="admin_name_{{ $admin->id }}">{{ $admin->name }}</td>
+                                    <td id="admin_email_{{ $admin->id }}">{{ $admin->email }}</td>
+                                    <td id="admin_telepon_number_{{ $admin->id }}">{{ $admin->telepon_number }}</td>
                                     <td>
-                                        <button class="btn btn-secondary text-center p-3">
+                                        <button class="btn btn-secondary text-center p-3" data-kt-menu-dismiss="true" data-bs-toggle="modal" data-bs-target="#update_modal" data-id="{{ $admin->id }}"  data-token="{{ csrf_token() }}">
                                             <i class="bx bx-edit fs-4"></i>
                                         </button>
                                     </td>
@@ -61,6 +61,9 @@
 
 @if (\Session::has('progress_error'))
     <div id="progress_error" data-error="{!! \Session::get('progress_error') !!}"></div>
+    @if (\Session::has('data_error'))
+        <div id="data_error" data-error="{!! \Session::get('data_error') !!}"></div>
+    @endif
 @endif
 @if (\Session::has('progress_success'))
     <div id="progress_success" data-error="{!! \Session::get('progress_success') !!}"></div>
@@ -162,20 +165,21 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak jadi</button>
-          <button type="submit" class="btn btn-danger">Simpan</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
         </form>
       </div>
     </div>
 </div>
 
-{{-- <div id="input_status" data-is-error="{{ count($errors)? true: false }}"></div> --}}
-
-<div class="modal fade" tabIndex={-1} id="success_modal">
+<div class="modal fade" tabIndex={-1} id="update_modal" data-route="{{ route('update-akun', '#') }}">
     <div class="modal-dialog">
       <div class="modal-content">
+        <form action="{{ route('update-akun', '#') }}" method="post" id="form_update">
+        @csrf @method('patch')
+        <input type="hidden" name="token" value="" id="tokenInput">
         <div class="modal-header">
-          <h5 class="modal-title">Permintaan berhasil dilaksanakan</h5>
+          <h5 class="modal-title">Perbarui administrator "<span id="adminName"></span>"</h5>
           <div
             class="btn btn-icon btn-sm btn-active-light-primary ms-2"
             data-bs-dismiss="modal"
@@ -184,12 +188,43 @@
           </div>
         </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Ok</button>
+        <div class="modal-body">
+            <div class="form-floating mb-4">
+                <input type="text" class="form-control" id="name_update" name="name_update" placeholder="Tuliskan nama anda" value="{{ old('name_update') }}">
+                <label for="name_update">Nama</label>
+
+                <span class="invalid-feedback" role="alert" id="name_update_errors">
+
+                </span>
+            </div>
+            <div class="form-floating mb-4">
+                <input type="email" class="form-control" id="email_update" name="email_update" placeholder="name@example.com" value="{{ old('email_update') }}">
+                <label for="email_update">Email</label>
+
+                <span class="invalid-feedback" role="alert" id="email_update_errors">
+
+                </span>
+            </div>
+            <div class="form-floating mb-4">
+                <input type="number" class="form-control" id="telepon_number_update" name="telepon_number_update" placeholder="6281234567890" value="{{ old('telepon_number_update') }}">
+                <label for="telepon_number_update">No. telepon</label>
+
+                <span class="invalid-feedback" role="alert" id="telepon_number_update_errors">
+
+                </span>
+            </div>
         </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak jadi</button>
+          <button type="submit" class="btn btn-primary" id="submit_update">Perbarui</button>
+        </div>
+        </form>
       </div>
     </div>
 </div>
+
+
 
 @endsection
 
@@ -201,6 +236,79 @@
         const data = e.relatedTarget.dataset;
         $('#admin_name').html(data.name);
         $('#deleteBeritaForm').attr('action', (e.target.dataset.route).replace('#', data.id));
+    });
+
+    $('#update_modal').on('show.bs.modal', e => {
+        const data = e.relatedTarget.dataset;
+        $('#adminName').html($(`#admin_name_${data.id}`).html());
+        $('#tokenInput').val(data.token);
+        $('#name_update').val($(`#admin_name_${data.id}`).html());
+        $('#email_update').val($(`#admin_email_${data.id}`).html());
+        $('#telepon_number_update').val($(`#admin_telepon_number_${data.id}`).html());
+        $('#form_update').attr('action', (e.target.dataset.route).replace('#', data.id));
+    });
+    $('#update_modal').on('hidden.bs.modal', e => {
+        $('.is-invalid').removeClass('is-invalid');
+        $('.invalid-feedback').html('');
+    });
+
+    function sendReq(url, method, token, data, success_cb, error_cb) {
+        $.ajax({
+            url: url,
+            type: method,
+            headers: {'X-CSRF-TOKEN': token},
+            data: data,
+            dataType: 'JSON',
+            success: function (data) {
+                // console.log(data);
+                success_cb(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                error_cb(jqXHR, textStatus, errorThrown);
+            },
+        });
+    }
+
+    function err(p1, p2, p3) {
+        console.log(p1);
+        console.log(p2);
+        console.log(p3);
+    }
+
+    $('#submit_update').click(e => {
+        e.preventDefault();
+        sendReq(
+            $('#form_update').attr('action'),
+            'PATCH',
+            $('#tokenInput').val(),
+            $('#form_update').serialize(),
+            data => {
+                console.log(data);
+                $('#update_modal').modal('hide');
+                toastr.success(`Admin ${data.admin_name} berhasil diperbarui`);
+                $(`#admin_name_${data.id}`).html(data.admin_name);
+                $(`#admin_email_${data.id}`).html(data.admin_email);
+                $(`#admin_telepon_number_${data.id}`).html(data.admin_telepon_number);
+
+                // Antisipasi ketika admin sedang aktif maka akan mengupdate user di sidebar juga
+                if (data.is_online) {
+                    $('.admin_active_name').html(data.admin_name);
+                    $('.admin_active_email').html(data.admin_email);
+                }
+            },
+            (jqXHR, textStatus, errorThrown) => {
+                const errors = jqXHR.responseJSON.errors;
+                for (const error in errors) {
+                    const element = errors[error];
+                    $(`#${error}`).addClass('is-invalid');
+                    element.forEach(msg => {
+                        $(`#${error}_errors`).append(`
+                            <strong>${msg}</strong><br />
+                        `);
+                    });
+                }
+            }
+        );
     });
 </script>
 <script>
@@ -251,6 +359,6 @@
         if (progress_success === 'create') {
             toastr.success("Admin baru telah ditambahkan");
         }
-    })
+    });
 </script>
 @endpush

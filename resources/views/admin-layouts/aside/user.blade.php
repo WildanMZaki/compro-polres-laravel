@@ -11,10 +11,10 @@
             <!--begin::Info-->
             <div class="flex-grow-1 me-2">
                 <!--begin::Username-->
-                <a href="#" class="text-white text-hover-primary fs-6 fw-bold">{{ $user->name }}</a>
+                <a href="#" class="text-white text-hover-primary fs-6 fw-bold admin_active_name">{{ $user->name }}</a>
                 <!--end::Username-->
                 <!--begin::Description-->
-                <span class="text-gray-600 fw-bold d-block fs-8 mb-1">{{ $user->role }}</span>
+                <span class="text-gray-600 fw-bold d-block fs-8 mb-1 admin_active_role">{{ $user->role }}</span>
                 <!--end::Description-->
                 <!--begin::Label-->
                 <div class="d-flex align-items-center text-success fs-9">
@@ -47,9 +47,9 @@
                             <!--end::Avatar-->
                             <!--begin::Username-->
                             <div class="d-flex flex-column">
-                                <div class="fw-bolder d-flex align-items-center fs-5">{{ $user->name }}
-                                <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{ $user->role }}</span></div>
-                                <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ $user->email }}</a>
+                                <div class="fw-bolder d-flex align-items-center fs-5 admin_active_name">{{ $user->name }}
+                                <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2 admin_active_role">{{ $user->role }}</span></div>
+                                <a href="#" class="fw-bold text-muted text-hover-primary fs-7 admin_active_email" onclick="location.href = `mailto:${event.target.innerHTML}`">{{ $user->email }}</a>
                             </div>
                             <!--end::Username-->
                         </div>
