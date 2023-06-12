@@ -81,18 +81,6 @@ class AdminSatkerController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        // $misi_list = $request->misi_list_item;
-        // $misi_p = $request->misi_p;
-        // if ($request->misi_type === 'paragraf') {
-        //     $misi_list = [];
-        // } elseif ($request->misi_type === 'list') {
-        //     $misi_p = '';
-        // }
-        // $misi = json_encode([
-        //     'p' => $misi_p,
-        //     'list' => $misi_list
-        // ]);
-
         $slug = sluger($request->name);
         if (count(Satker::where('slug', '==', $slug)->get())) { $slug .= time(); }
 
@@ -168,18 +156,6 @@ class AdminSatkerController extends Controller
             'name.max' => 'Maksimal karakter untuk nama karakter adalah 100 karakter'
         ];
         $this->validate($request, $rules, $messages);
-
-        // $misi_list = $request->misi_list_item;
-        // $misi_p = $request->misi_p;
-        // if ($request->misi_type === 'paragraf') {
-        //     $misi_list = [];
-        // } elseif ($request->misi_type === 'list') {
-        //     $misi_p = '';
-        // }
-        // $misi = json_encode([
-        //     'p' => $misi_p,
-        //     'list' => $misi_list
-        // ]);
 
         $slug = sluger($request->name);
         if (count(Satker::where('slug', '==', $slug)->get())) { $slug .= time(); }

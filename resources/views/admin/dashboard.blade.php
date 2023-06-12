@@ -222,3 +222,11 @@
 <!--end::Row-->
 
 @endsection
+
+<!--begin::Page Custom Javascript(used by this page)-->
+
+@push('scripts')
+<script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
+@endpush
+
+<!--end::Page Custom Javascript-->

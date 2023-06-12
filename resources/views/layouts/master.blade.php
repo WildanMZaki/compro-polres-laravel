@@ -27,6 +27,9 @@
     {{-- Memanggil Online Scripts --}}
     @includeIf('layouts.scripts')
 
+    {{-- Push Script here --}}
+    @stack('scripts')
+
     {{-- Memanggil Local scripts --}}
     @if (isset($scripts))
         @foreach ($scripts as $script)
