@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-12">
             <div class="row my-3">
-                <h3>Semua layanan (<span id="totalService">0</span>)</h3>
+                <h3>Semua layanan (<span id="totalService">{{ count($layanans) }}</span>)</h3>
             </div>
             <div class="semua-layanan row">
                 @foreach ($layanans as $layanan)
