@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\Layanan;
 use App\Models\Satker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -34,6 +35,7 @@ class HomeController extends Controller
         $data['scripts'] = ['../module/slick/slick', 'home'];
         $data['satkers'] = Satker::all();
         $data['beritas'] = Berita::all()->sortByDesc('created_at')->take(3);
+        $data['layanans'] = Layanan::all()->sortByDesc('visited')->take(4);
         return view('menu/home', $data);
     }
 }

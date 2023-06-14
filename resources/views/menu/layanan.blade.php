@@ -37,35 +37,6 @@
                         </div>
                     </div>
                 @endforeach
-                {{-- <div class="col-lg-4 d-flex flex-column justify-content-around mb-2">
-                    <div class="card shadow pointer mb-2">
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-lg-4 col-3 service-image">
-                                    <img src="{{ asset('img/layanan/195866688013-06-2023_23--27--30.png') }}" alt="" class="img-fluid">
-                                </div>
-                                <div class="col-lg-8 col-9">
-                                    <h4 class="p-0 m-0 mb-2">SIM</h4>
-                                    <small class="text-edark p-2 mb-2 badge bg-warning">Dikunjungi 19 kali</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card shadow pointer">
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-lg-4 col-3 service-image">
-                                    <img src="{{ asset('img/layanan/195866688013-06-2023_23--27--30.png') }}" alt="" class="img-fluid">
-                                </div>
-                                <div class="col-lg-8 col-9">
-                                    <h4 class="p-0 m-0 mb-2">SIM</h4>
-                                    <small class="text-edark p-2 mb-2 badge bg-warning">Dikunjungi 19 kali</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
             </div>
         </div>
     </div>

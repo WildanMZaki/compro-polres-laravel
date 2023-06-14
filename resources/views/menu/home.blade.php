@@ -2,6 +2,15 @@
 
 @section('content')
 
+<style>
+    .service-img {
+        height: 100px;
+    }
+    .service-img img {
+        object-fit: contain
+    }
+</style>
+
 <main class="container-fluid">
     <section id="hero">
         <div class="row text-dark hero-img">
@@ -24,46 +33,27 @@
                 <h4 class="m-0">Layanan Kami</h4>
             </div>
             <div class="row py-3">
-                <div class="col-3 p-lg-3 p-1 layanan">
-                    <div class="border shadow py-3 rounded-3">
-                        <div class="d-flex justify-content-center">
-                            <i class="bx bx-id-card fs-1"></i>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <small class="m-0 p-0">SIM</small>
-                        </div>
+                @if (!count($layanans))
+                    <div class="p-5 w-100">
+                        <small>Maaf belum ada layanan disediakan</small>
                     </div>
-                </div>
-                <div class="col-3 p-lg-3 p-1 layanan">
-                    <div class="border shadow py-3 rounded-3">
-                        <div class="d-flex justify-content-center">
-                            <i class="bx bx-file fs-1"></i>
+                @else
+                    @foreach ($layanans as $layanan)
+                        <div class="col-lg-3 col-6 p-lg-3 p-1 layanan h-100">
+                            <div class="card border shadow py-3 rounded-3 h-100"  onclick="location.href = `{{ route('dapatkan-layanan', $layanan->id) }}`">
+                                <div class="card-body d-flex flex-column h-100">
+                                    <div class="d-flex justify-content-center service-img mb-2">
+                                        <img src="{{ asset("img/layanan/$layanan->icon") }}" alt="Icon Layanan" class="img-fluid w-50">
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <small class="m-0 p-0 fw-bold">{{ $layanan->name }}</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <small class="m-0 p-0">SKCK</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3 p-lg-3 p-1 layanan">
-                    <div class="border shadow py-3 rounded-3">
-                        <div class="d-flex justify-content-center">
-                            <i class="bx bx-car fs-1"></i>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <small class="m-0 p-0">STNK</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3 p-lg-3 p-1 layanan">
-                    <div class="border shadow py-3 rounded-3">
-                        <div class="d-flex justify-content-center">
-                            <i class="bx bx-traffic-cone fs-1"></i>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <small class="m-0 p-0">E-Tilang</small>
-                        </div>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
+
             </div>
         </div>
     </section>
