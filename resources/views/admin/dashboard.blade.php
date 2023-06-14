@@ -5,7 +5,7 @@
 <!--begin::Row-->
 <div class="row g-5 g-xl-8">
 
-    <div class="col-xl-6">
+    <div class="col-xl-4">
         <!--begin::Statistics Widget 5-->
         <a href="{{ route('admin-satker') }}" class="card bg-white hoverable card-xl-stretch mb-xl-8">
             <!--begin::Body-->
@@ -26,13 +26,13 @@
         <!--end::Statistics Widget 5-->
     </div>
 
-    <div class="col-xl-6">
+    <div class="col-xl-4">
         <!--begin::Statistics Widget 5-->
-        <a href="{{ route('admin-berita') }}" class="card bg-dark hoverable card-xl-stretch mb-xl-8">
+        <a href="{{ route('admin-berita') }}" class="card bg-secondary hoverable card-xl-stretch mb-xl-8">
             <!--begin::Body-->
             <div class="card-body">
                 <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
-                <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
+                <span class="svg-icon svg-icon-dark svg-icon-3x ms-n1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M11.2929 2.70711C11.6834 2.31658 12.3166 2.31658 12.7071 2.70711L15.2929 5.29289C15.6834 5.68342 15.6834 6.31658 15.2929 6.70711L12.7071 9.29289C12.3166 9.68342 11.6834 9.68342 11.2929 9.29289L8.70711 6.70711C8.31658 6.31658 8.31658 5.68342 8.70711 5.29289L11.2929 2.70711Z" fill="black" />
                         <path d="M11.2929 14.7071C11.6834 14.3166 12.3166 14.3166 12.7071 14.7071L15.2929 17.2929C15.6834 17.6834 15.6834 18.3166 15.2929 18.7071L12.7071 21.2929C12.3166 21.6834 11.6834 21.6834 11.2929 21.2929L8.70711 18.7071C8.31658 18.3166 8.31658 17.6834 8.70711 17.2929L11.2929 14.7071Z" fill="black" />
@@ -41,8 +41,29 @@
                     </svg>
                 </span>
                 <!--end::Svg Icon-->
-                <div class="text-white fw-bolder fs-2 mb-2 mt-5">Berita</div>
-                <div class="fw-bold text-white">{{ $berita_total? $berita_total: 'Belum ada' }} Postingan, {{ $reader }} Pembaca</div>
+                <div class="text-dark fw-bolder fs-2 mb-2 mt-5">Berita</div>
+                <div class="fw-bold text-dark">{{ $berita_total? $berita_total: 'Belum ada' }} Postingan, {{ $reader }} Pembaca</div>
+            </div>
+            <!--end::Body-->
+        </a>
+        <!--end::Statistics Widget 5-->
+    </div>
+
+    <div class="col-xl-4">
+        <!--begin::Statistics Widget 5-->
+        <a href="{{ route('admin-layanan') }}" class="card bg-dark hoverable card-xl-stretch mb-xl-8">
+            <!--begin::Body-->
+            <div class="card-body">
+                <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
+                <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 7H2V11H22V7Z" fill="black" />
+                        <path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19ZM14 14C14 13.4 13.6 13 13 13H5C4.4 13 4 13.4 4 14C4 14.6 4.4 15 5 15H13C13.6 15 14 14.6 14 14ZM16 15.5C16 16.3 16.7 17 17.5 17H18.5C19.3 17 20 16.3 20 15.5C20 14.7 19.3 14 18.5 14H17.5C16.7 14 16 14.7 16 15.5Z" fill="black" />
+                    </svg>
+                </span>
+                <!--end::Svg Icon-->
+                <div class="text-white fw-bolder fs-2 mb-2 mt-5">Layanan</div>
+                <div class="fw-bold text-white">{{ $layanan_total? $layanan_total: 'Belum ada' }} Layanan</div>
             </div>
             <!--end::Body-->
         </a>
@@ -53,30 +74,6 @@
 <!--end::Row-->
 <!--begin::Row-->
 <div class="row g-5 g-xl-8">
-    <!--begin::Col-->
-    <div class="col-xl-6">
-        <!--begin::Charts Widget 1-->
-        <div class="card card-xl-stretch mb-5 mb-xl-8">
-            <!--begin::Header-->
-            <div class="card-header border-0 pt-5">
-                <!--begin::Title-->
-                <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bolder fs-3 mb-1">Statistik Pengunjung</span>
-                    <span class="text-muted fw-bold fs-7">More than 400 new members</span>
-                </h3>
-                <!--end::Title-->
-            </div>
-            <!--end::Header-->
-            <!--begin::Body-->
-            <div class="card-body">
-                <!--begin::Chart-->
-                <div id="kt_charts_widget_1_chart" style="height: 350px"></div>
-                <!--end::Chart-->
-            </div>
-            <!--end::Body-->
-        </div>
-        <!--end::Charts Widget 1-->
-    </div>
 
     <div class="col-xl-6">
         <!--begin::List Widget 7-->
@@ -87,100 +84,6 @@
                     <span class="fw-bolder text-dark">Berita Terbaru</span>
                     <span class="text-muted mt-1 fw-bold fs-7">Articles and publications</span>
                 </h3>
-                {{-- <div class="card-toolbar">
-                    <!--begin::Menu-->
-                    <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                        <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
-                        <span class="svg-icon svg-icon-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="5" y="5" width="5" height="5" rx="1" fill="#000000" />
-                                    <rect x="14" y="5" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
-                                    <rect x="5" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
-                                    <rect x="14" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
-                                </g>
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                    </button>
-                    <!--begin::Menu 1-->
-                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_6148588700dd8">
-                        <!--begin::Header-->
-                        <div class="px-7 py-5">
-                            <div class="fs-5 text-dark fw-bolder">Filter Options</div>
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Menu separator-->
-                        <div class="separator border-gray-200"></div>
-                        <!--end::Menu separator-->
-                        <!--begin::Form-->
-                        <div class="px-7 py-5">
-                            <!--begin::Input group-->
-                            <div class="mb-10">
-                                <!--begin::Label-->
-                                <label class="form-label fw-bold">Status:</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <div>
-                                    <select class="form-select form-select-solid" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_6148588700dd8" data-allow-clear="true">
-                                        <option></option>
-                                        <option value="1">Approved</option>
-                                        <option value="2">Pending</option>
-                                        <option value="2">In Process</option>
-                                        <option value="2">Rejected</option>
-                                    </select>
-                                </div>
-                                <!--end::Input-->
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="mb-10">
-                                <!--begin::Label-->
-                                <label class="form-label fw-bold">Member Type:</label>
-                                <!--end::Label-->
-                                <!--begin::Options-->
-                                <div class="d-flex">
-                                    <!--begin::Options-->
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                        <input class="form-check-input" type="checkbox" value="1" />
-                                        <span class="form-check-label">Author</span>
-                                    </label>
-                                    <!--end::Options-->
-                                    <!--begin::Options-->
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="checkbox" value="2" checked="checked" />
-                                        <span class="form-check-label">Customer</span>
-                                    </label>
-                                    <!--end::Options-->
-                                </div>
-                                <!--end::Options-->
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="mb-10">
-                                <!--begin::Label-->
-                                <label class="form-label fw-bold">Notifications:</label>
-                                <!--end::Label-->
-                                <!--begin::Switch-->
-                                <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="" name="notifications" checked="checked" />
-                                    <label class="form-check-label">Enabled</label>
-                                </div>
-                                <!--end::Switch-->
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Actions-->
-                            <div class="d-flex justify-content-end">
-                                <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-                                <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                            </div>
-                            <!--end::Actions-->
-                        </div>
-                        <!--end::Form-->
-                    </div>
-                    <!--end::Menu 1-->
-                    <!--end::Menu-->
-                </div> --}}
             </div>
             <!--end::Header-->
             <!--begin::Body-->
@@ -196,7 +99,7 @@
                         <div class="d-flex align-items-sm-center mb-7">
                             <!--begin::Symbol-->
                             <div class="symbol symbol-60px symbol-2by3 me-4">
-                                <div class="symbol-label" style="background-image: url('{{ asset("img/berita/".$berita->image) }}')"></div>
+                                <div class="symbol-label" style="background-image: url('{{ asset("img/berita/".$berita->image) }}'); background-size: contain; background-position: center;"></div>
                             </div>
                             <!--end::Symbol-->
                             <!--begin::Title-->
@@ -217,7 +120,53 @@
         </div>
         <!--end::List Widget 7-->
     </div>
-    <!--end::Col-->
+
+    <div class="col-xl-6">
+        <!--begin::List Widget 7-->
+        <div class="card card-xl-stretch mb-xl-8">
+            <!--begin::Header-->
+            <div class="card-header align-items-center border-0 mt-4">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="fw-bolder text-dark">Layanan Terpopuler</span>
+                    <span class="text-muted mt-1 fw-bold fs-7">Our Services</span>
+                </h3>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            @if (!count($layanans))
+                <div class="text-center py-5">
+                    <p>Belum ada layanan yang disediakan</p>
+                    <a href="{{ route('tambah-layanan') }}">Tambahkan layanan</a>
+                </div>
+            @else
+                <div class="card-body pt-3">
+                    <!--begin::Items-->
+                    @foreach ($layanans as $layanan)
+                        <div class="d-flex align-items-sm-center mb-7">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-60px symbol-2by3 me-4">
+                                <div class="symbol-label" style="background-image: url('{{ asset("img/layanan/".$layanan->icon) }}'); background-size: contain; background-position: center;"></div>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Title-->
+                            <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+                                <div class="flex-grow-1 me-2">
+                                    <p>{{ $layanan->name }}</p>
+                                </div>
+                                <span class="badge badge-light-{{ ((!intval($layanan->visited))? 'danger': ((intval($layanan->visited) > 10)? 'success': 'warning')) }} fs-8 fw-bolder my-2">Dikunjungi {{ $layanan->visited }} kali</span>
+                            </div>
+                            <!--end::Title-->
+                        </div>
+                    @endforeach
+                    <!--end::Items-->
+                </div>
+            @endif
+            <!--end::Body-->
+        </div>
+        <!--end::List Widget 7-->
+    </div>
+
+
 </div>
 <!--end::Row-->
 

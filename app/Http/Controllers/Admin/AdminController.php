@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Satker;
 use App\Models\Berita;
+use App\Models\Layanan;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -24,6 +25,8 @@ class AdminController extends Controller
         $data['satker_total'] = count(Satker::all());
         $data['berita_total'] = count(Berita::all());
         $data['berita_terbaru'] = Berita::all()->sortByDesc('created_at')->take(4);
+        $data['layanan_total'] = count(Layanan::all());
+        $data['layanans'] = Layanan::all()->sortByDesc('visited')->take(4);
         $reader = 0;
         foreach (Berita::all() as $b) {
             $reader += $b->visitor;
@@ -31,6 +34,10 @@ class AdminController extends Controller
         $data['user'] = Auth::user();
         $data['reader'] = $reader;
         return view('admin/dashboard', $data);
+    }
+
+    public function chats() {
+        return Redirect::to('https://www.tawk.to/login');
     }
 
     public function accounts()

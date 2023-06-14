@@ -25,7 +25,7 @@
                                     </div>
                                     <div class="col-lg-8 col-9">
                                         <h4 class="p-0 m-0 mb-2">{{ $layanan->name }}</h4>
-                                        <small class="text-edark p-2 mb-2 badge bg-warning">{{ $layanan->visited? "Dikunjungi $layanan->visited kali": 'Belum dikunjungi'}}</small>
+                                        <small class="text-muted mb-2">{{ $layanan->visited? "Dipilih oleh $layanan->visited pengguna": 'Belum dipilih'}}</small>
                                     </div>
                                 </div>
                                 @if ($layanan->deskripsi)
