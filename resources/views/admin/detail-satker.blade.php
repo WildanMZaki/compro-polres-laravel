@@ -18,7 +18,7 @@
         <section class="row mb-5">
             <div class="col-12 d-flex justify-content-end">
                 <a href="{{ route('detail-satker', $satker->slug) }}" class="me-3">
-                    <button class="btn btn-outline-dark" type="button">
+                    <button class="btn btn-dark" type="button">
                         Lihat tampilan untuk user
                     </button>
                 </a>

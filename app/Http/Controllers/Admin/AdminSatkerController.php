@@ -86,8 +86,11 @@ class AdminSatkerController extends Controller
 
         $file = $request->file('image');
         $filename = $slug . '.' . $file->getClientOriginalExtension();
-        $img = Image::make($file);
-        $img->save(public_path('img/satker/') . $filename);
+        $save_path = public_path('img/satker/');
+        if (!file_exists($save_path)) {
+            mkdir($save_path, 775, true);
+        }
+        Image::make($file->getRealPath())->save($save_path.$filename);
 
         Satker::create([
             'name' => $request->name,
@@ -165,8 +168,11 @@ class AdminSatkerController extends Controller
 
             $file = $request->file('image');
             $filename = $slug . '.' . $file->getClientOriginalExtension();
-            $img = Image::make($file);
-            $img->save(public_path('img/satker/') . $filename);
+            $save_path = public_path('img/satker/');
+            if (!file_exists($save_path)) {
+                mkdir($save_path, 775, true);
+            }
+            Image::make($file->getRealPath())->save($save_path.$filename);
             $satker->image = $filename;
         }
 
@@ -182,12 +188,16 @@ class AdminSatkerController extends Controller
 
             $contacts = [];
             foreach ($request->contacts as $ind => $contact) {
-                $contacts[] = [
-                    'type' => $request->contact_type[$ind],
-                    'contact' => $contact
-                ];
+                if ($contact) {
+                    $contacts[] = [
+                        'type' => $request->contact_type[$ind],
+                        'contact' => $contact
+                    ];
+                }
             }
-            $satker->satker_contacts()->createMany($contacts);
+            if (count($contacts)) {
+                $satker->satker_contacts()->createMany($contacts);
+            }
         }
 
         return Redirect::to('/Admin/Satker');

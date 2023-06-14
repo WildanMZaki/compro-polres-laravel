@@ -82,8 +82,11 @@ class AdminBeritaController extends Controller
 
         $file = $request->file('image');
         $filename = time() .'-'. str_shuffle(time()) . '.' . $file->getClientOriginalExtension();
-        $img = Image::make($file);
-        $img->save(public_path('img/berita/') . $filename);
+        $save_path = public_path('img/berita/');
+        if (!file_exists($save_path)) {
+            mkdir($save_path, 775, true);
+        }
+        Image::make($file->getRealPath())->save($save_path.$filename);
 
         $slug = sluger($request->title);
         if (count(Berita::where('slug', '==', $slug)->get())) { $slug .= time(); }
@@ -113,6 +116,7 @@ class AdminBeritaController extends Controller
         ];
         $data['user'] = Auth::user();
         $data['berita'] = $berita;
+        $data['images'] = NewsImage::all();
         return view('admin/form-berita', $data);
     }
 

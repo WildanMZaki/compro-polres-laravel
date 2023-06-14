@@ -20,7 +20,7 @@
     <div class="col-xl-10 offset-xl-1">
         <div class="mb-6">
             <label class="form-label fw-bold fs-3" for="satkerName">Judul Berita</label>
-            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" placeholder="Tuliskan judul berita" id="newsTitle" value="{{ $isEdit? $berita->title: old('title') }}" autofocus />
+            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" placeholder="Tuliskan judul berita" id="newsTitle" value="{{ $isEdit? $berita->title: old('title') }}" autofocus required />
 
             @error('title')
                 <span class="invalid-feedback" role="alert">
@@ -37,7 +37,7 @@
                 </div>
             @endif
             <label for="newsImage" class="form-label fw-bold fs-3">{{ $isEdit? 'Atau upload gambar baru:': 'Upload gambar' }}</label>
-            <input type="file" name="image" id="newsImage" class="form-control  @error('image') is-invalid @enderror">
+            <input type="file" name="image" id="newsImage" class="form-control  @error('image') is-invalid @enderror" {{ $isEdit? '': 'required' }}>
 
             @error('image')
                 <span class="invalid-feedback" role="alert">
@@ -47,11 +47,7 @@
         </div>
         <div class="mb-5">
             <label for="newsImage" class="form-label fw-bold fs-3">Tuliskan isi berita</label>
-            {{-- <input type="hidden" name="content" id="newsContent">
-            <div class="form-control p-5">
-                <trix-editor input="newsContent"></trix-editor>
-            </div> --}}
-            <textarea name="content" id="my-editor" cols="30" rows="10" class="my-editor form-control @error('content') is-invalid @enderror">{{ $isEdit? $berita->content: old('content') }}</textarea>
+            <textarea name="content" id="my-editor" cols="30" rows="10" class="my-editor form-control @error('content') is-invalid @enderror" required>{{ $isEdit? $berita->content: old('content') }}</textarea>
 
             @error('content')
                 <span class="invalid-feedback" role="alert">
@@ -70,23 +66,6 @@
 
 <div class="row mt-10">
     <h2 class="mb-4">Image Manager</h2>
-    {{-- <div class="row">
-        <div class="col-xl-4 col-sm-6">
-            <div class="card p-2">
-                <div class="card-body">
-                    <h5 class="text-center">Judul gambar</h5>
-                    <img src="{{ asset('img/berita/G.jpg') }}" alt="Foto" class="img-fluid mb-5">
-                    <div class="d-flex align-items-center">
-                        <small class="badge badge-light-success cursor-pointer">
-                            {{ asset('img/berita/G.jpg') }}
-                        </small>
-                        <i class="bx bx-copy fs-3"></i>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div> --}}
     <div class="row">
         <div class="col-xl-12">
             <div class="card py-5 px-4">
@@ -142,15 +121,11 @@
 
 @push('scripts')
     {{-- Khusus Page Berita --}}
-    {{-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
-    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script> --}}
 
     <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('my-editor');
     </script>
-    {{-- <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script> --}}
     <script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
 	<script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script>

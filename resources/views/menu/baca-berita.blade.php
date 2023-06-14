@@ -82,7 +82,7 @@
                         @csrf
                         <div class="card shadow">
                             <div class="card-body">
-                                <textarea class="form-control" id="comment" rows="3" placeholder="Tuliskan komentar" name="comment"></textarea>
+                                <textarea class="form-control" id="comment" rows="3" placeholder="Tuliskan komentar" name="comment" required></textarea>
                             </div>
                             <div class="card-footer d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary" title="Kirim komentar">Kirim <i class="bx bx-paper-plane"></i></button>
@@ -109,7 +109,7 @@
                                         <span class='badge bg-light text-primary'>{{ $comment->user->role }} <i class='bx bx-check-circle'></i></span>
                                     @endif
                                 </p>
-                                <small class="text-muted">1 jam yang lalu</small>
+                                <small class="text-muted">{{ time_passed($comment->created_at) }}</small>
                                 <p>{{ $comment->comment }}</p>
                                 <div class="d-flex align-items-center comment-actions">
                                     <span class="me-2">

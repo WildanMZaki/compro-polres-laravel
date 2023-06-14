@@ -45,6 +45,8 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/Berita/like/{comment}', [BeritaController::class, 'comment_like'])->name('like-komentar');
     Route::post('/Berita/dislike/{comment}', [BeritaController::class, 'comment_dislike'])->name('dislike-komentar');
 
+    Route::get('/Layanan/{layanan}', [LayananController::class, 'get'])->name('dapatkan-layanan');
+
     Route::get('/Profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/Profile/edit', [ProfileController::class, 'edit'])->name('edit-profile');
     Route::get('/Profile/foto', [ProfileController::class, 'photo'])->name('edit-foto');
@@ -76,11 +78,12 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::patch('/Admin/EditBerita/{berita:slug}', [AdminBeritaController::class, 'update_news'])->name('update-berita');
     Route::delete('/Admin/HapusBerita/{berita:slug}', [AdminBeritaController::class, 'remove_news'])->name('hapus-berita');
 
-    Route::get('/Admin/Layanan/SIM', [AdminLayananController::class, 'sim'])->name('sim_service');
-    Route::get('/Admin/Layanan/STNK', [AdminLayananController::class, 'stnk'])->name('stnk_service');
-    Route::get('/Admin/Layanan/SKCK', [AdminLayananController::class, 'skck'])->name('skck_service');
-    Route::get('/Admin/Layanan/E-Tilang', [AdminLayananController::class, 'etilang'])->name('etilang_service');
-
+    Route::get('/Admin/Layanan/', [AdminLayananController::class, 'index'])->name('admin-layanan');
+    Route::get('/Admin/TambahLayanan/', [AdminLayananController::class, 'add'])->name('tambah-layanan');
+    Route::post('/Admin/TambahLayanan/', [AdminLayananController::class, 'save'])->name('simpan-layanan');
+    Route::delete('/Admin/Layanan/{layanan:slug}', [AdminLayananController::class, 'delete'])->name('hapus-layanan');
+    Route::get('/Admin/EditLayanan/{layanan:slug}', [AdminLayananController::class, 'edit'])->name('edit-layanan');
+    Route::patch('/Admin/EditLayanan/{layanan:slug}', [AdminLayananController::class, 'update'])->name('update-layanan');
 
     Route::get('/Admin/Chats', [ChatController::class, 'index'])->name('chats');
 });

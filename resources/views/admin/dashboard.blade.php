@@ -202,7 +202,7 @@
                             <!--begin::Title-->
                             <div class="d-flex flex-row-fluid flex-wrap align-items-center">
                                 <div class="flex-grow-1 me-2">
-                                    <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">{{ $berita->title }}</a>
+                                    <a href="{{ route('preview-berita', $berita->slug) }}" class="text-gray-800 fw-bolder text-hover-primary fs-6">{{ $berita->title }}</a>
                                     <span class="text-muted fw-bold d-block pt-1">{{ date_convert($berita->created_at) }}</span>
                                 </div>
                                 <span class="badge badge-light-{{ ((!intval($berita->visitor))? 'danger': ((intval($berita->visitor) > 10)? 'success': 'warning')) }} fs-8 fw-bolder my-2">{{ $berita->visitor }} Pembaca</span>

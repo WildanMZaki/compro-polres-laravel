@@ -60,7 +60,7 @@
 @else
     <div class="row d-flex flex-wrap align-items-stretch" id="semua-berita">
         @foreach ($beritas as $berita)
-            <div class="col-xl-4 berita cursor-pointer h-100 my-2">
+            <div class="col-xl-4 berita cursor-pointer h-100 my-lg-0 my-2">
                 <!--begin::List Widget 7-->
                 <div class="card card-xl-stretch mb-xl-8 shadow h-100 flex-fill">
                     <!--begin::Header-->
@@ -90,8 +90,8 @@
                                 <div class="px-7 py-5">
                                     <!--begin::Actions-->
                                     <div class="d-flex justify-content-end">
-                                        <button type="reset" class="btn btn-sm btn-light btn-light-primary me-2" data-kt-menu-dismiss="true" onclick="location.href = `{{ route('edit-berita', $berita->slug) }}`">Edit</button>
-                                        <button type="submit" class="btn btn-sm btn-danger" data-kt-menu-dismiss="true" data-bs-toggle="modal" data-bs-target="#confirm_delete" data-slug="{{ $berita->slug }}" data-title="{{ $berita->title }}">Hapus</button>
+                                        <button type="button" class="btn btn-sm btn-light btn-light-primary me-2" data-kt-menu-dismiss="true" onclick="location.href = `{{ route('edit-berita', $berita->slug) }}`">Edit</button>
+                                        <button type="button" class="btn btn-sm btn-danger" data-kt-menu-dismiss="true" data-bs-toggle="modal" data-bs-target="#confirm_delete" data-slug="{{ $berita->slug }}" data-title="{{ $berita->title }}">Hapus</button>
                                     </div>
                                     <!--end::Actions-->
                                 </div>
@@ -118,7 +118,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Apakah kamu yakin ingin menghapus berita "<span id="news_title"></span>"</h5>
+          <h5 class="modal-title">Apakah anda yakin ingin menghapus berita "<span id="news_title"></span>"</h5>
           <div
             class="btn btn-icon btn-sm btn-active-light-primary ms-2"
             data-bs-dismiss="modal"
