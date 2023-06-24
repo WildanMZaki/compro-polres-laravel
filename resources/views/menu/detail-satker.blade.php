@@ -23,7 +23,7 @@
     $links = [
         'instagram' => 'https://www.instagram.com/',
         'email' => 'mailto:',
-        'whatsapp' => 'wa.me/',
+        'whatsapp' => 'https://wa.me/',
         'facebook' => 'https://www.facebook.com/',
         'twitter' => 'https://www.twitter.com/',
         'tik-tok' => 'https://www.tiktok.com/@'
