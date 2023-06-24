@@ -85,7 +85,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/Admin/EditLayanan/{layanan:slug}', [AdminLayananController::class, 'edit'])->name('edit-layanan');
     Route::patch('/Admin/EditLayanan/{layanan:slug}', [AdminLayananController::class, 'update'])->name('update-layanan');
 
-    Route::get('/Admin/Chats', [AdminController::class, 'chats'])->name('chats');
+    Route::get('/Admin/Chats', [ChatController::class, 'index'])->name('chats');
 });
 
 

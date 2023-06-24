@@ -26,6 +26,7 @@
         'whatsapp' => 'wa.me/',
         'facebook' => 'https://www.facebook.com/',
         'twitter' => 'https://www.twitter.com/',
+        'tik-tok' => 'https://www.tiktok.com/@'
     ];
 @endphp
 <main class="container">
@@ -44,7 +45,7 @@
                     @else
                         @foreach ($satker->satker_contacts as $contact)
                             <a href="{{ $links[$contact->type].$contact->contact}}" title="Contact Link" class="text-edark fs-4 p-2 border rounded mx-1">
-                                <i class="bx bxl-{{ $contact->type === 'email'? 'gmail': $contact->type }}"></i>
+                                <i class="bx bxl-{{ $contact->type === 'email'? 'gmail': ($contact->type === 'tik-tok'? 'tiktok': $contact->type) }}"></i>
                             </a>
                         @endforeach
                     @endif
