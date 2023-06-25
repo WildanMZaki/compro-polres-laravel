@@ -76,7 +76,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::post('/Admin/UploadGambarBerita', [AdminBeritaController::class, 'save_news_images'])->name('simpan-gambar-berita');
     Route::get('/Admin/EditBerita/{berita:slug}', [AdminBeritaController::class, 'edit_news'])->name('edit-berita');
     Route::patch('/Admin/EditBerita/{berita:slug}', [AdminBeritaController::class, 'update_news'])->name('update-berita');
-    Route::delete('/Admin/HapusBerita/{berita:slug}', [AdminBeritaController::class, 'remove_news'])->name('hapus-berita');
+    Route::delete('/Admin/Berita/{berita:slug}', [AdminBeritaController::class, 'remove_news'])->name('hapus-berita');
 
     Route::get('/Admin/Layanan/', [AdminLayananController::class, 'index'])->name('admin-layanan');
     Route::get('/Admin/TambahLayanan/', [AdminLayananController::class, 'add'])->name('tambah-layanan');
