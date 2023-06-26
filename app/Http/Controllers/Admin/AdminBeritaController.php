@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Berita;
 use App\Models\NewsImage;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -19,9 +20,17 @@ class AdminBeritaController extends Controller
         $data['active'] = 'Berita';
         $data['header'] = 'Semua Berita';
         $data['breadcumbs'] = ['Berita'];
-        $data['scripts'] = ['search', 'admin/berita'];
+        $data['scripts'] = ['search'];
         $sort = (!isset($request->sort)) ? 'created_at' : $request->sort ;
-        $data['beritas'] = ($sort === 'title') ? Berita::all()->sortBy($sort) : Berita::all()->sortByDesc($sort) ;
+        if (Auth::user()->role === 'admin') {
+            $data['beritas'] = ($sort === 'title') ? Berita::all()->sortBy($sort) : Berita::all()->sortByDesc($sort) ;
+        } else {
+            $data['beritas'] = ($sort === 'title') ? Berita::where('user_id', '=', Auth::id())->get()->sortBy($sort) : Berita::where('user_id', '=', Auth::id())->get()->sortByDesc($sort) ;
+        }
+        foreach ($data['beritas'] as $b) {
+            $reporter = (User::where('id', '=', $b->user_id)->get())[0]->name;
+            $b->reporter = $reporter;
+        }
         $data['sort'] = $sort;
         $data['user'] = Auth::user();
         return view('admin/admin-berita', $data);
@@ -92,6 +101,7 @@ class AdminBeritaController extends Controller
         if (count(Berita::where('slug', '==', $slug)->get())) { $slug .= time(); }
 
         Berita::create([
+            'user_id' => Auth::id(),
             'title' => $request->title,
             'slug' => $slug,
             'image' => $filename,
@@ -103,7 +113,12 @@ class AdminBeritaController extends Controller
 
     public function edit_news(Berita $berita)
     {
-        $data['title'] = 'Edit Baru';
+        if (Auth::user()->role === 'admin-berita') {
+            if ($berita->user_id !== Auth::id()) {
+                return redirect('/Admin/Berita');
+            }
+        }
+        $data['title'] = 'Edit Berita';
         $data['active'] = 'Berita';
         $data['header'] = 'Edit Berita';
         $data['route_back'] = 'admin-berita';
@@ -122,6 +137,11 @@ class AdminBeritaController extends Controller
 
     public function update_news(Request $request, Berita $berita)
     {
+        if (Auth::user()->role !== 'admin') {
+            if ($berita->user_id !== Auth::id()) {
+                return abort(403);
+            }
+        }
         $rules = [
             'title' => 'required|max:250',
             'image' => 'image|mimes:jpg,jpeg,png,gif',
@@ -157,6 +177,11 @@ class AdminBeritaController extends Controller
 
     public function remove_news(Berita $berita)
     {
+        if (Auth::user()->role !== 'admin') {
+            if ($berita->user_id !== Auth::id()) {
+                return abort(403);
+            }
+        }
         File::delete(public_path('img/berita/'.$berita->image));
         $berita->delete();
         return Redirect::to('/Admin/Berita');

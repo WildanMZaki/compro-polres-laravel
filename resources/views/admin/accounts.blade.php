@@ -13,7 +13,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body p-5">
-                    <h2>Daftar Administrator</h2>
+                    <h2>Daftar Administrator Berita</h2>
                     <div class="row mb-4">
                         <div class="d-flex justify-content-end col-12">
                             <button class="btn btn-success" data-kt-menu-dismiss="true" data-bs-toggle="modal" data-bs-target="#form_modal">
@@ -45,7 +45,7 @@
                                         </button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger text-center p-3" data-kt-menu-dismiss="true" data-bs-toggle="modal" data-bs-target="#confirm_delete" data-id="{{ $admin->id }}" data-name="{{ $admin->name }}" {{ count($administrators) === 1? 'disabled': ''}}>
+                                        <button class="btn btn-danger text-center p-3" data-kt-menu-dismiss="true" data-bs-toggle="modal" data-bs-target="#confirm_delete" data-id="{{ $admin->id }}" data-name="{{ $admin->name }}">
                                             <i class="bx bx-x fs-4 p-0 m-0"></i>
                                         </button>
                                     </td>
@@ -107,7 +107,7 @@
         <form action="{{ route('simpan-akun') }}" method="post" id="form_account">
         @csrf
         <div class="modal-header">
-          <h5 class="modal-title">Tambahkan administrator baru</h5>
+          <h5 class="modal-title">Tambahkan administrator berita baru</h5>
           <div
             class="btn btn-icon btn-sm btn-active-light-primary ms-2"
             data-bs-dismiss="modal"
@@ -117,7 +117,6 @@
         </div>
 
         <div class="modal-body">
-            <input type="hidden" name="role" value="admin">
             <div class="form-floating mb-4">
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Tuliskan nama anda" value="{{ old('name') }}">
                 <label for="name">Nama</label>
@@ -357,7 +356,7 @@
             $('#form_modal').modal('show');
         }
         if (progress_success === 'create') {
-            toastr.success("Admin baru telah ditambahkan");
+            toastr.success("Admin Berita baru telah ditambahkan");
         }
     });
 </script>

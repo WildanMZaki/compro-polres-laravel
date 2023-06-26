@@ -11,10 +11,12 @@
                     <a href="{{ route('baca-berita', $berita->slug) }}" class="me-3">
                         <button type="button" class="btn btn-sm btn-secondary">Lihat tampilan untuk user</button>
                     </a>
-                    <a href="{{ route('edit-berita', $berita->slug) }}" class="me-3">
-                        <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                    </a>
-                    <button type="button" class="btn btn-sm btn-danger" data-kt-menu-dismiss="true" data-bs-toggle="modal" data-bs-target="#confirm_delete">Hapus</button>
+                    @if ($user->id ===  $berita->user_id || $user->role === 'admin')
+                        <a href="{{ route('edit-berita', $berita->slug) }}" class="me-3">
+                            <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                        </a>
+                        <button type="button" class="btn btn-sm btn-danger" data-kt-menu-dismiss="true" data-bs-toggle="modal" data-bs-target="#confirm_delete">Hapus</button>
+                    @endif
                 </div>
             </div>
 

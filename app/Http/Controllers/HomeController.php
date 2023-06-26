@@ -24,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->role !== 'user') {
+            return redirect('/Admin');
+        }
         return view('opening');
     }
 

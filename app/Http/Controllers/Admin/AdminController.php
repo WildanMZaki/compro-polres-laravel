@@ -25,11 +25,23 @@ class AdminController extends Controller
         $data['berita_total'] = count(Berita::all());
         $data['berita_terbaru'] = Berita::all()->sortByDesc('created_at')->take(4);
         $reader = 0;
-        foreach (Berita::all() as $b) {
+        foreach ($data['berita_terbaru'] as $b) {
             $reader += $b->visitor;
+            $reporter = (User::find($b->user_id)->where('id', '=', $b->user_id)->get())[0]->name;
+            $b->reporter = $reporter === Auth::user()->name? 'Saya': $reporter;
         }
         $data['user'] = Auth::user();
         $data['reader'] = $reader;
+        if (Auth::user()->role === 'admin-berita') {
+            $berita_saya = Berita::where('user_id', '=', Auth::id())->get();
+            $data['my_news'] = $berita_saya;
+            $data['berita_saya'] = count($berita_saya);
+            $reader_saya = 0;
+            foreach ($berita_saya as $bs) {
+                $reader_saya += $bs->visitor;
+            }
+            $data['reader_saya'] = $reader_saya;
+        }
         return view('admin/dashboard', $data);
     }
 
@@ -40,7 +52,7 @@ class AdminController extends Controller
         $data['active'] = 'Accounts';
         $data['header'] = 'Daftar Akun Administrator';
         $data['breadcumbs'] = ['Akun'];
-        $data['administrators'] = User::where('role', '!=', 'user')->get();
+        $data['administrators'] = User::where('role', '=', 'admin-berita')->get();
         return view('admin/accounts', $data);
     }
 
@@ -69,7 +81,7 @@ class AdminController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'telepon_number' => $request->telepon_number,
-            'role' => $request->role,
+            'role' => 'admin-berita',
             'password' => Hash::make($request->password),
         ]);
 

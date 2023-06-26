@@ -54,8 +54,19 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/Profile/edit/{user}', [ProfileController::class, 'update'])->name('update-profile');
 });
 
-Route::middleware(['auth', 'admin'])->group(function() {
+Route::middleware(['auth', 'adminberita'])->group(function () {
     Route::get('/Admin/', [AdminController::class, 'index'])->name('admin-main');
+    Route::get('/Admin/Berita', [AdminBeritaController::class, 'index'])->name('admin-berita');
+    Route::get('/Admin/TambahBerita', [AdminBeritaController::class, 'add'])->name('tambah-berita');
+    Route::get('/Admin/Berita/{berita:slug}', [AdminBeritaController::class, 'preview'])->name('preview-berita');
+    Route::post('/Admin/TambahBerita', [AdminBeritaController::class, 'save_news'])->name('simpan-berita');
+    Route::post('/Admin/UploadGambarBerita', [AdminBeritaController::class, 'save_news_images'])->name('simpan-gambar-berita');
+    Route::get('/Admin/EditBerita/{berita:slug}', [AdminBeritaController::class, 'edit_news'])->name('edit-berita');
+    Route::patch('/Admin/EditBerita/{berita:slug}', [AdminBeritaController::class, 'update_news'])->name('update-berita');
+    Route::delete('/Admin/Berita/{berita:slug}', [AdminBeritaController::class, 'remove_news'])->name('hapus-berita');
+});
+
+Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/Admin/Accounts', [AdminController::class, 'accounts'])->name('accounts');
     Route::post('/Admin/Accounts', [AdminController::class, 'save_account'])->name('simpan-akun');
     Route::delete('/Admin/Accounts/{user}', [AdminController::class, 'remove_account'])->name('hapus-akun');
@@ -68,15 +79,6 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/Admin/EditSatker/{satker:slug}', [AdminSatkerController::class, 'edit_satker'])->name('edit-satker');
     Route::patch('/Admin/EditSatker/{satker:slug}', [AdminSatkerController::class, 'update_satker'])->name('perbarui-satker');
     Route::delete('/Admin/HapusSatker/{satker:slug}', [AdminSatkerController::class, 'remove_satker'])->name('hapus-satker');
-
-    Route::get('/Admin/Berita', [AdminBeritaController::class, 'index'])->name('admin-berita');
-    Route::get('/Admin/TambahBerita', [AdminBeritaController::class, 'add'])->name('tambah-berita');
-    Route::get('/Admin/Berita/{berita:slug}', [AdminBeritaController::class, 'preview'])->name('preview-berita');
-    Route::post('/Admin/TambahBerita', [AdminBeritaController::class, 'save_news'])->name('simpan-berita');
-    Route::post('/Admin/UploadGambarBerita', [AdminBeritaController::class, 'save_news_images'])->name('simpan-gambar-berita');
-    Route::get('/Admin/EditBerita/{berita:slug}', [AdminBeritaController::class, 'edit_news'])->name('edit-berita');
-    Route::patch('/Admin/EditBerita/{berita:slug}', [AdminBeritaController::class, 'update_news'])->name('update-berita');
-    Route::delete('/Admin/Berita/{berita:slug}', [AdminBeritaController::class, 'remove_news'])->name('hapus-berita');
 
     Route::get('/Admin/Layanan/', [AdminLayananController::class, 'index'])->name('admin-layanan');
     Route::get('/Admin/TambahLayanan/', [AdminLayananController::class, 'add'])->name('tambah-layanan');

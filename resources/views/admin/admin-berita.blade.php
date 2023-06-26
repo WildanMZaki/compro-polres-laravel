@@ -53,7 +53,7 @@
 @if (!count($beritas))
     <div class="row g-5 g-xl-8 my-5" id="nullberita">
         <div class="p-5 bg-light text-center">
-            <p class="text-muted fs-2 p-0 m-5">Hmm.. Belum ada berita yang dipublikasikan</p>
+            <p class="text-muted fs-2 p-0 m-5">Hmm.. Belum ada berita yang {{ $user->role === 'admin-berita'? 'anda publikasikan': 'dipublikasikan' }}</p>
             <a href="{{ route('tambah-berita') }}">Publikasikan berita baru</a>
         </div>
     </div>
@@ -103,8 +103,11 @@
                     </div>
                     <!--end::Header-->
                     <!--begin::Body-->
-                    <div class="card-body p-5 d-flex justify-content-center align-items-center">
+                    <div class="card-body p-5 d-flex flex-column justify-content-center align-items-center">
                         <img src="{{ asset('img/berita/'.$berita->image)}}" alt="Gambar Berita" class="img-fluid rounded-3">
+                        @if ($user->role === 'admin')
+                            <span class="fw-bold my-2">Oleh: {{ $berita->reporter }}</span>
+                        @endif
                     </div>
                     <!--end::Body-->
                 </div>
@@ -147,3 +150,25 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+
+$('#confirm_delete').on('show.bs.modal', e => {
+    const data = e.relatedTarget.dataset;
+    $('#news_title').html(data.title);
+    $('#deleteBeritaForm').attr('action', (e.target.dataset.route).replace('#', data.slug));
+});
+
+const search = new Search({
+    classItem: '.berita',
+    classSearch: [
+        '.judul-berita', '.tanggal-berita'
+    ],
+    container: '#semua-berita'
+});
+
+$('#searchBox').on('input', e => search.filter(e));
+
+</script>
+@endpush

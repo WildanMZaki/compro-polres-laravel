@@ -29,15 +29,15 @@
             @enderror
         </div>
         <div class="mb-5">
-            @if ($isEdit)
-                <label class="form-label fw-bold fs-3">Gambar sebelumnya:</label><br>
-                <div class="d-flex flex-column align-items-center">
-                    <img src="{{ asset('img/berita/'.$berita->image) }}" alt="Image Preview" class="img-fluid mb-5 mx-4 w-75 text-center"><br>
+            <label class="form-label fw-bold fs-3">Preview Gambar:</label><br>
+            <div class="d-flex flex-column align-items-center">
+                <img src="{{ $isEdit? asset('img/berita/'.$berita->image): '' }}" alt="Image Preview" class="img-fluid mb-5 mx-4 w-75 text-center {{ $isEdit? '': 'd-none' }}" id="imgPreview"><br>
+                @if ($isEdit)
                     <h6 class="text-primary mb-5">Jangan upload gambar lain jika tidak ingin melakukan perubahan terhadap gambar</h6>
-                </div>
-            @endif
+                @endif
+            </div>
             <label for="newsImage" class="form-label fw-bold fs-3">{{ $isEdit? 'Atau upload gambar baru:': 'Upload gambar' }}</label>
-            <input type="file" name="image" id="newsImage" class="form-control  @error('image') is-invalid @enderror" {{ $isEdit? '': 'required' }}>
+            <input type="file" name="image" id="newsImage" class="form-control  @error('image') is-invalid @enderror" {{ $isEdit? '': 'required' }} onchange="previewImage()">
 
             @error('image')
                 <span class="invalid-feedback" role="alert">
@@ -70,12 +70,13 @@
         <div class="col-xl-12">
             <div class="card py-5 px-4">
                 <div class="row mb-6">
-                    <form action="{{ route('simpan-gambar-berita') }}" method="post" enctype="multipart/form-data">
+                    <form id="imagesForm" action="{{ route('simpan-gambar-berita') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <label for="inputImages" class="form-label">Upload 1 atau lebih gambar untuk menambahkan konten gambar pada berita</label>
                         <div class="input-group">
-                            <input type="file" class="form-control @error('gambar_berita') is-invalid @enderror" id="inputImages" name="gambar_berita[]" aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple required>
-                            <button class="btn btn-success" type="submit" id="inputGroupFileAddon04">Upload gambar baru</button>
+                            <input type="hidden" name="berita_id" value="{{ $isEdit? $berita->id: 0 }}">
+                            <input type="file" class="form-control @error('gambar_berita') is-invalid @enderror" id="inputImages" name="gambar_berita[]" aria-describedby="submitImages" aria-label="Upload" multiple required>
+                            <button class="btn btn-success" type="submit" id="submitImages">Upload gambar baru</button>
                         </div>
 
                         @error('gambar_berita')
@@ -96,14 +97,14 @@
                         </tr>
                     </thead>
                     <tbody id="imgs_body">
-                        @if (count($images))
+                        @if (isset($images))
                             @foreach ($images as $i => $image)
                                 <tr>
                                     <td>{{ $i+1 }}</td>
                                     <td class="w-25"><img src="{{ asset("img/berita/$image->name") }}" alt="Foto untuk berita" class="img-fluid"></td>
                                     <td>{{ $image->name }}</td>
                                     <td>
-                                        <button class="btn btn-secondary text-primary copy-img-link" type="button" data-link="{{ asset("img/berita/$image->name") }}">
+                                        <button class="btn btn-secondary text-primary copy-img-link" type="button" data-link="{{ asset("img/berita/$image->name") }}" title="Click untuk mendapatkan link gambar">
                                             <i class="bx bx-copy fs-3"></i>
                                         </button>
                                     </td>
@@ -128,6 +129,37 @@
     </script>
     <script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
 	<script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+        <script>
+            function previewImage() {
+                document.getElementById("imgPreview").classList.remove('d-none');
+                var oFReader = new FileReader();
+                oFReader.readAsDataURL(document.getElementById("newsImage").files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                document.getElementById("imgPreview").src = oFREvent.target.result;
+                };
+            };
+
+            // $("body").on("click","#submitImages",function(e){
+            //     $(this).parents("form").ajaxForm(options);
+            // });
+
+            // var options = {
+            //     complete: function(response)
+            //     {
+            //         if($.isEmptyObject(response.responseJSON.error)){
+            //             $("input[name='gambar_berita']").val('');
+            //             alert('Upload gambar berhasil.');
+            //         }else{
+            //             printErrorMsg(response.responseJSON.error);
+            //         }
+            //     }
+            // };
+
+            // function printErrorMsg (msg) {
+            //     console.log('err', msg);
+            // }
+        </script>
     <script>
         "use strict";
 

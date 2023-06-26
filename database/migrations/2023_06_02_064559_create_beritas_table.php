@@ -15,6 +15,7 @@ class CreateBeritasTable extends Migration
     {
         Schema::create('beritas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('title', 250)->unique();
             $table->string('slug', 250)->unique();
             $table->string('image', 300);
