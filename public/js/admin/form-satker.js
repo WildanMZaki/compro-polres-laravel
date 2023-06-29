@@ -78,7 +78,7 @@ $('#addContact').click(e => {
     contact += 1;
     $('#contacts').append(`
         <div class="form-control d-flex contact" id="contact${item_count}">
-            <select name="contact_type[]" id="" class="form-control w-25">
+            <select name="contact_type[]" id="" class="form-control w-25 select-contacts">
                 <option value="instagram">Instagram</option>
                 <option value="email">Email</option>
                 <option value="facebook">Facebook</option>
@@ -86,7 +86,7 @@ $('#addContact').click(e => {
                 <option value="twitter">Twitter</option>
                 <option value="tik-tok">Tik tok</option>
             </select>
-            <input type="text" class="form-control" name="contacts[]">
+            <input type="text" class="form-control input-contacts" name="contacts[]"  placeholder="Masukan username akun instagram anda">
             <button type="button" class="btn btn-danger m-1 p-3 remove-contact" title="Hapus Contact" data-num="${item_count}"><i class="bx bx-x fs-3 m-2"></i></button>
         </div>
     `);
@@ -96,3 +96,37 @@ $('#contacts').on('click', '.remove-contact', e => {
     const num = e.currentTarget.dataset.num;
     $(`#contact${num}`).remove();
 });
+
+$('#contacts').on('change', '.select-contacts', (e) => {
+    const val  = e.currentTarget.value;
+    let placeholder, type;
+    switch (val) {
+        case 'email':
+            placeholder = 'Masukan email anda';
+            type = 'email';
+            break;
+        case 'facebook':
+            placeholder = 'Tuliskan nama akun facebook anda';
+            type = 'text';
+            break;
+        case 'whatsapp':
+            placeholder = 'Tuliskan nomor Whatsapp, contoh: 6212345678980';
+            type = 'number';
+            break;
+        case 'twitter':
+            placeholder = 'Tuliskan username dari akun twitter anda';
+            type = 'text';
+            break;
+        case 'tik-tok':
+            placeholder = 'Tuliskan username dari akun tik tok anda';
+            type = 'text';
+            break;
+
+            default:
+            placeholder = 'Masukan username akun instagram anda';
+            break;
+    }
+
+    e.currentTarget.nextElementSibling.placeholder = placeholder;
+    e.currentTarget.nextElementSibling.type = type;
+})

@@ -4,6 +4,14 @@
 
 @php
     $isEdit = isset($satker);
+    $placeholdersInput = [
+        'instagram' => 'Masukan username akun instagram anda',
+        'email' => 'Masukan email anda',
+        'facebook' => 'Tuliskan nama akun facebook anda',
+        'whatsapp' => 'Tuliskan nomor Whatsapp, contoh: 6212345678980',
+        'twitter' => 'Tuliskan username dari akun twitter anda',
+        'tik-tok' => 'Tuliskan username dari akun tik tok anda'
+    ];
 @endphp
 
 <form action="{{ route(!$isEdit? 'simpan-satker': 'perbarui-satker', $isEdit? $satker->slug: null) }}" method="post" enctype="multipart/form-data">
@@ -68,7 +76,7 @@
             <div id="contacts">
                 @if (!$isEdit)
                     <div class="form-control d-flex contact" id="contact1">
-                        <select name="contact_type[]" id="" class="form-control w-25">
+                        <select name="contact_type[]" id="" class="form-control w-25 select-contacts">
                             <option value="instagram">Instagram</option>
                             <option value="email">Email</option>
                             <option value="facebook">Facebook</option>
@@ -76,14 +84,14 @@
                             <option value="twitter">Twitter</option>
                             <option value="tik-tok">Tik tok</option>
                         </select>
-                        <input type="text" class="form-control" name="contacts[]" value="">
+                        <input type="text" class="form-control input-contacts" name="contacts[]" value="" placeholder="Masukan username akun instagram anda">
                         <button type="button" class="btn btn-danger m-1 p-3 remove-contact" title="Hapus Contact" data-num="1"><i class="bx bx-x fs-3 m-2"></i></button>
                     </div>
                 @else
                     @if (count($contacts))
                         @foreach ($contacts as $k => $contact)
                             <div class="form-control d-flex contact" id="contact{{ $k+1}}">
-                                <select name="contact_type[]" id="" class="form-control w-25">
+                                <select name="contact_type[]" id="" class="form-control w-25 select-contacts">
                                     <option {{ $contact->type === 'instagram'? 'selected': '' }} value="instagram">Instagram</option>
                                     <option {{ $contact->type === 'email'? 'selected': '' }} value="email">Email</option>
                                     <option {{ $contact->type === 'facebook'? 'selected': '' }} value="facebook">Facebook</option>
@@ -91,7 +99,7 @@
                                     <option {{ $contact->type === 'twitter'? 'selected': '' }} value="twitter">Twitter</option>
                                     <option {{ $contact->type === 'tik-tok'? 'selected': '' }} value="tik-tok">Tik tok</option>
                                 </select>
-                                <input type="text" class="form-control" name="contacts[]" value="{{ $contact->contact }}">
+                                <input type="{{ ($contact->type === 'email')? 'email': (($contact->type === 'whatsapp')? 'number': 'text')}}" class="form-control" name="contacts[]" value="{{ $contact->contact }}" placeholder="{{ $placeholdersInput[$contact->type] }}">
                                 <button type="button" class="btn btn-danger m-1 p-3 remove-contact" title="Hapus Contact" data-num="{{ $k+1 }}"><i class="bx bx-x fs-3 m-2"></i></button>
                             </div>
                         @endforeach
@@ -121,6 +129,9 @@
     <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('my-editor');
+    </script>
+    <script>
+
     </script>
 
 @endpush
